@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HFH</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <img src="assets/logo_hfh.svg" alt="HFH" class="logo" />
+    <div>
+      <h1 class="brand-title">HFH</h1>
+      <p class="brand-subtitle">Local-first • Sans collecte de données</p>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="card">
+    <h2 data-i18n="title">Générateur HFH</h2>
+
+    <label for="langSelect">Langue / Language</label>
+    <select id="langSelect">
+      <option value="fr" selected>Français</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="ru">Русский</option>
+      <option value="ar">العربية</option>
+      <option value="zh">中文</option>
+    </select>
+
+    <p class="muted">
+      Le document est généré localement sur votre appareil. Aucun envoi automatique.
+    </p>
+
+    <hr />
+
+    <label for="facts">Exposé des faits (résumé)</label>
+    <textarea id="facts" rows="7" placeholder="Décrivez les faits (dates, lieux, acteurs, victimes, preuves disponibles)."></textarea>
+
+    <div class="actions">
+      <button id="exportPDF">Exporter en PDF (ONU)</button>
+      <button id="exportDOCX">Exporter en DOCX (édition)</button>
+    </div>
+
+    <p class="muted">
+      <a href="how-to.html" data-i18n="guide">Guide ONU</a>
+    </p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>HFH — Local-first • Aucun stockage</p>
+</footer>
+
+<!-- Libs (export PDF/DOCX) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<!-- Scripts locaux -->
+<script src="js/main.js"></script>
+<script src="js/multilingual.js"></script>
+<script src="js/pdf-docx.js"></script>
+
+<script>
+  // Brancher le sélecteur de langue
+  const langSelect = document.getElementById("langSelect");
+  if (langSelect) {
+    langSelect.addEventListener("change", (e) => {
+      if (typeof setLanguage === "function") setLanguage(e.target.value);
+    });
+
+    // Détection auto (optionnel)
+    const browserLang = (navigator.language || "fr").slice(0, 2);
+    const supported = ["fr","en","es","ru","ar","zh"];
+    const chosen = supported.includes(browserLang) ? browserLang : "fr";
+    langSelect.value = chosen;
+    if (typeof setLanguage === "function") setLanguage(chosen);
+  }
+</script>
+
+</body>
+</html>
