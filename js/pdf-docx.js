@@ -1,4 +1,9 @@
-/*
+console.log('pdf-docx.js chargé');
+
+// Test d'exposition
+window.testFunction = function() {
+    alert('Les fonctions globales fonctionnent !');
+};/*
   HFH - pdf-docx.js
   Exports: PDF (jsPDF) + DOCX (docx + FileSaver)
 */
