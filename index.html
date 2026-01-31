@@ -106,15 +106,8 @@
     <textarea id="facts" rows="7" placeholder="Décrivez les faits (dates, lieux, acteurs, victimes, preuves disponibles)."></textarea>
 
     <div class="actions">
-     <button id="exportPDF"
-  onclick="try{ hfhExportPDF('HFH_plainte_ONU'); }catch(e){ alert('PDF ERROR: ' + (e && e.message ? e.message : e)); console.error(e); }">
-  Exporter en PDF (ONU)
-</button>
-
-<button id="exportDOCX"
-  onclick="try{ hfhExportDOCX('HFH_plainte_ONU'); }catch(e){ alert('DOCX ERROR: ' + (e && e.message ? e.message : e)); console.error(e); }">
-  Exporter en DOCX (édition)
-</button>
+     <button id="btn-export-pdf">Exporter en PDF (ONU)</button>
+<button id="btn-export-docx">Exporter en DOCX (édition)</button>
 
 
 
