@@ -167,3 +167,12 @@ if (typeof window !== "undefined") {
   window.hfhExportPDF = window.hfhExportPDF || hfhExportPDF;
   window.hfhExportDOCX = window.hfhExportDOCX || hfhExportDOCX;
 }
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('btn-export-pdf').addEventListener('click', function() {
+        hfhExportPDF('HFH_plainte_ONU');
+    });
+    
+    document.getElementById('btn-export-docx').addEventListener('click', function() {
+        hfhExportDOCX('HFH_plainte_ONU');
+    });
+});
