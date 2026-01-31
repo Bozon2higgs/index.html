@@ -126,36 +126,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <!-- Scripts locaux -->
+<script src="js/main.js"></script>
+<script src="js/multilingual.js"></script>
+<script src="js/pdf-docx.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-window.addEventListener("DOMContentLoaded", () => {
-  const btnPDF = document.getElementById("exportPDF");
-  const btnDOCX = document.getElementById("exportDOCX");
 
-  if (btnPDF) {
-    btnPDF.onclick = () => {
-      try {
-        hfhExportPDF("HFH_plainte_ONU");
-      } catch (e) {
-        alert("Erreur export PDF : " + (e?.message || e));
-        console.error(e);
-      }
-    };
-  }
 
-  if (btnDOCX) {
-    btnDOCX.onclick = () => {
-      try {
-        hfhExportDOCX("HFH_plainte_ONU");
-      } catch (e) {
-        alert("Erreur export DOCX : " + (e?.message || e));
-        console.error(e);
-      }
-    };
-  }
-});
 
 
 
