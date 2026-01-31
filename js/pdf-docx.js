@@ -162,3 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // Exposer les fonctions globalement (OBLIGATOIRE pour Tor / Firefox strict)
 window.hfhExportPDF = hfhExportPDF;
 window.hfhExportDOCX = hfhExportDOCX;
+// --- HFH: expose exports for HTML onclick (Tor/Firefox strict) ---
+if (typeof window !== "undefined") {
+  window.hfhExportPDF = window.hfhExportPDF || hfhExportPDF;
+  window.hfhExportDOCX = window.hfhExportDOCX || hfhExportDOCX;
+}
