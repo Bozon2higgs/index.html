@@ -120,7 +120,7 @@
   <p>HFH — Local-first • Aucun stockage</p>
 </footer>
 
-<!-- Libs (export PDF/DOCX) -->
+<!-- Libs export PDF / DOCX -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -129,31 +129,23 @@
 <script src="js/main.js"></script>
 <script src="js/multilingual.js"></script>
 <script src="js/pdf-docx.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-
-
-
-
-
+<!-- Initialisation langue -->
 <script>
-  // Brancher le sélecteur de langue
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {
     langSelect.addEventListener("change", (e) => {
       if (typeof setLanguage === "function") setLanguage(e.target.value);
     });
 
-    // Détection auto (optionnel)
     const browserLang = (navigator.language || "fr").slice(0, 2);
-    const supported = ["fr","en","es","ru","ar","zh"];
+    const supported = ["fr", "en", "es", "ru", "ar", "zh"];
     const chosen = supported.includes(browserLang) ? browserLang : "fr";
     langSelect.value = chosen;
     if (typeof setLanguage === "function") setLanguage(chosen);
   }
 </script>
+
 
 </body>
 </html>
