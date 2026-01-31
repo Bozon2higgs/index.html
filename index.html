@@ -39,6 +39,69 @@
 
     <hr />
 
+<div class="grid">
+  <div>
+    <label for="identityMode">Identité</label>
+    <select id="identityMode">
+      <option value="identified" selected>Identifié</option>
+      <option value="anonymous">Anonyme</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="fullName">Nom / Prénom</label>
+    <input id="fullName" type="text" placeholder="Ex : Higgs Boson" value="Higgs Boson" />
+  </div>
+
+  <div>
+    <label for="residence">Lieu de résidence (optionnel)</label>
+    <input id="residence" type="text" placeholder="Ex : Espace-Temps Infini" value="Espace-Temps Infini" />
+  </div>
+
+  <div>
+    <label for="country">Pays / Territoire concerné</label>
+    <input id="country" type="text" placeholder="Ex : France / Palestine / Mali…" />
+  </div>
+
+  <div>
+    <label for="dateStart">Date début</label>
+    <input id="dateStart" type="date" />
+  </div>
+
+  <div>
+    <label for="dateEnd">Date fin</label>
+    <input id="dateEnd" type="date" />
+  </div>
+</div>
+
+<label for="victims">Victimes / populations affectées</label>
+<textarea id="victims" rows="3" placeholder="Décris qui est affecté (groupes, nombres, profils, vulnérabilités)…"></textarea>
+
+<label for="allegedAuthors">Auteurs présumés / responsables (si connus)</label>
+<textarea id="allegedAuthors" rows="3" placeholder="Institutions, groupes, individus, chaînes de commandement (si connus)…"></textarea>
+
+<label>Violations alléguées (sélection indicative)</label>
+<div class="checks">
+  <label><input type="checkbox" class="vio" value="Violences/attaques contre civils"> Violences/attaques contre civils</label>
+  <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
+  <label><input type="checkbox" class="vio" value="Torture / mauvais traitements"> Torture / mauvais traitements</label>
+  <label><input type="checkbox" class="vio" value="Discrimination / persécution"> Discrimination / persécution</label>
+  <label><input type="checkbox" class="vio" value="Déplacements forcés"> Déplacements forcés</label>
+  <label><input type="checkbox" class="vio" value="Atteintes à la liberté d’expression"> Atteintes à la liberté d’expression</label>
+  <label><input type="checkbox" class="vio" value="Violences sexuelles"> Violences sexuelles</label>
+  <label><input type="checkbox" class="vio" value="Atteintes aux droits économiques et sociaux"> Atteintes aux droits économiques et sociaux</label>
+</div>
+
+<label for="facts">Faits détaillés (chronologie, dates, lieux, contexte)</label>
+<textarea id="facts" rows="8" placeholder="Décrivez les faits : dates, lieux, acteurs, victimes, enchaînement, conséquences…"></textarea>
+
+<label for="evidence">Preuves / annexes (liste)</label>
+<textarea id="evidence" rows="4" placeholder="Ex : photos, vidéos, rapports, articles, documents, témoignages…"></textarea>
+
+<label for="requests">Demandes (ce que vous sollicitez)</label>
+<textarea id="requests" rows="4" placeholder="Ex : enquête, communication urgente, mesures provisoires, recommandations, suivi…"></textarea>
+
+
     <label for="facts">Exposé des faits (résumé)</label>
     <textarea id="facts" rows="7" placeholder="Décrivez les faits (dates, lieux, acteurs, victimes, preuves disponibles)."></textarea>
 
