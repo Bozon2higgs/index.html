@@ -159,3 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("exportDOCX")?.addEventListener("click", () => hfhExportDOCX("HFH_plainte_ONU"));
 });
 
+// Exposer les fonctions globalement (OBLIGATOIRE pour Tor / Firefox strict)
+window.hfhExportPDF = hfhExportPDF;
+window.hfhExportDOCX = hfhExportDOCX;
