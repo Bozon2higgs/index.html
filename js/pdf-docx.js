@@ -1,119 +1,110 @@
 // ============================================================================
-// HFH - Générateur PDF/DOCX Local-First
-// Compatible: Firefox, Tor Browser, GitHub Pages
-// Aucune dépendance backend, exécution 100% client
+// HFH - Export PDF/DOCX - Version corrigée pour IDs exacts
 // ============================================================================
 
 console.log('✓ pdf-docx.js chargé');
 
 // ============================================================================
-// FONCTION 1: Export PDF avec jsPDF
+// FONCTION EXPORT PDF
 // ============================================================================
-
-function hfhExportPDF(filename) {
-    console.log('→ hfhExportPDF appelé avec:', filename);
+function hfhExportPDF() {
+    console.log('→ hfhExportPDF appelé');
     
     try {
-        // Vérifier que jsPDF est disponible
+        // Vérifier jsPDF
         if (typeof window.jspdf === 'undefined' && typeof jsPDF === 'undefined') {
-            alert('ERREUR: Bibliothèque jsPDF non chargée.\nVérifiez que le CDN est accessible.');
+            alert('Erreur: Bibliothèque jsPDF non disponible.');
             return;
         }
         
         const { jsPDF } = window.jspdf || window;
         
-        // Récupérer les valeurs du formulaire
-        const identite = document.querySelector('input[name="identite"]:checked')?.value || 'anonyme';
-        const nomPrenom = document.getElementById('nom-prenom')?.value || '';
-        const lieu = document.getElementById('lieu')?.value || '';
-        const pays = document.getElementById('pays')?.value || '';
-        const dateDebut = document.getElementById('date-debut')?.value || '';
-        const dateFin = document.getElementById('date-fin')?.value || '';
-        const victimes = document.getElementById('victimes')?.value || '';
-        const auteurs = document.getElementById('auteurs')?.value || '';
-        const faits = document.getElementById('faits')?.value || '';
-        const preuves = document.getElementById('preuves')?.value || '';
-        const demandes = document.getElementById('demandes')?.value || '';
-        const resume = document.getElementById('resume')?.value || '';
+        // Récupérer les données avec les IDs EXACTS de votre HTML
+        const identityMode = document.getElementById('identityMode')?.value || 'anonymous';
+        const fullName = document.getElementById('fullName')?.value || '';
+        const residence = document.getElementById('residence')?.value || '';
+        const country = document.getElementById('country')?.value || '';
+        const dateStart = document.getElementById('dateStart')?.value || '';
+        const dateEnd = document.getElementById('dateEnd')?.value || '';
+        const victims = document.getElementById('victims')?.value || '';
+        const allegedAuthors = document.getElementById('allegedAuthors')?.value || '';
+        const facts = document.getElementById('facts')?.value || '';
+        const evidence = document.getElementById('evidence')?.value || '';
+        const requests = document.getElementById('requests')?.value || '';
         
         // Récupérer les violations cochées
         const violations = [];
-        document.querySelectorAll('input[name="violations"]:checked').forEach(cb => {
-            violations.push(cb.nextElementSibling.textContent.trim());
+        document.querySelectorAll('.vio:checked').forEach(cb => {
+            violations.push(cb.value);
         });
         
         // Créer le PDF
         const doc = new jsPDF();
-        let yPos = 20;
+        let y = 20;
         const lineHeight = 7;
         const margin = 20;
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const maxWidth = pageWidth - 2 * margin;
+        const maxWidth = 170;
         
         // En-tête
         doc.setFontSize(18);
         doc.setFont(undefined, 'bold');
-        doc.text('SIGNALEMENT HFH', margin, yPos);
-        yPos += lineHeight * 2;
+        doc.text('SIGNALEMENT HFH', margin, y);
+        y += lineHeight * 2;
         
         doc.setFontSize(10);
         doc.setFont(undefined, 'normal');
-        doc.text('Document généré localement - Confidentiel', margin, yPos);
-        yPos += lineHeight * 2;
+        doc.text('Document généré localement - Confidentiel', margin, y);
+        y += lineHeight * 2;
         
         // Fonction pour ajouter une section
         function addSection(title, content) {
-            // Vérifier si on doit changer de page
-            if (yPos > 270) {
+            if (y > 270) {
                 doc.addPage();
-                yPos = 20;
+                y = 20;
             }
             
             doc.setFontSize(12);
             doc.setFont(undefined, 'bold');
-            doc.text(title, margin, yPos);
-            yPos += lineHeight;
-            
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
+            doc.text(title, margin, y);
+            y += lineHeight;
             
             if (content) {
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
                 const lines = doc.splitTextToSize(content, maxWidth);
                 lines.forEach(line => {
-                    if (yPos > 280) {
+                    if (y > 280) {
                         doc.addPage();
-                        yPos = 20;
+                        y = 20;
                     }
-                    doc.text(line, margin, yPos);
-                    yPos += lineHeight;
+                    doc.text(line, margin, y);
+                    y += lineHeight;
                 });
             }
-            
-            yPos += lineHeight;
+            y += lineHeight;
         }
         
         // Ajouter les sections
-        if (identite === 'identifie' && nomPrenom) {
-            addSection('IDENTITÉ', nomPrenom);
+        if (identityMode === 'identified' && fullName) {
+            addSection('IDENTITÉ', fullName);
         } else {
             addSection('IDENTITÉ', 'Anonyme');
         }
         
-        if (lieu) addSection('LIEU DE RÉSIDENCE', lieu);
-        if (pays) addSection('PAYS/TERRITOIRE CONCERNÉ', pays);
-        if (dateDebut) addSection('PÉRIODE - DÉBUT', dateDebut);
-        if (dateFin) addSection('PÉRIODE - FIN', dateFin);
-        if (victimes) addSection('VICTIMES / POPULATIONS AFFECTÉES', victimes);
-        if (auteurs) addSection('AUTEURS PRÉSUMÉS', auteurs);
+        if (residence) addSection('LIEU DE RÉSIDENCE', residence);
+        if (country) addSection('PAYS/TERRITOIRE CONCERNÉ', country);
+        if (dateStart) addSection('PÉRIODE - DÉBUT', dateStart);
+        if (dateEnd) addSection('PÉRIODE - FIN', dateEnd);
+        if (victims) addSection('VICTIMES / POPULATIONS AFFECTÉES', victims);
+        if (allegedAuthors) addSection('AUTEURS PRÉSUMÉS', allegedAuthors);
         
         if (violations.length > 0) {
             addSection('VIOLATIONS ALLÉGUÉES', violations.join('\n• '));
         }
         
-        if (resume) addSection('EXPOSÉ DES FAITS (RÉSUMÉ)', resume);
-        if (faits) addSection('FAITS DÉTAILLÉS', faits);
-        if (preuves) addSection('PREUVES / ANNEXES', preuves);
-        if (demandes) addSection('DEMANDES', demandes);
+        if (facts) addSection('FAITS DÉTAILLÉS', facts);
+        if (evidence) addSection('PREUVES / ANNEXES', evidence);
+        if (requests) addSection('DEMANDES', requests);
         
         // Footer
         doc.setFontSize(8);
@@ -122,17 +113,17 @@ function hfhExportPDF(filename) {
         for (let i = 1; i <= pageCount; i++) {
             doc.setPage(i);
             doc.text(
-                `HFH - Page ${i}/${pageCount} - Généré le ${new Date().toLocaleDateString()}`,
+                'HFH - Page ' + i + '/' + pageCount + ' - ' + new Date().toLocaleDateString(),
                 margin,
                 doc.internal.pageSize.getHeight() - 10
             );
         }
         
         // Télécharger
-        const finalFilename = filename || 'HFH_document';
-        doc.save(`${finalFilename}_${Date.now()}.pdf`);
+        const filename = 'HFH_plainte_ONU_' + Date.now() + '.pdf';
+        doc.save(filename);
         
-        console.log('✓ PDF généré avec succès');
+        console.log('✓ PDF généré:', filename);
         
     } catch (error) {
         console.error('ERREUR PDF:', error);
@@ -141,44 +132,42 @@ function hfhExportPDF(filename) {
 }
 
 // ============================================================================
-// FONCTION 2: Export DOCX avec docx.js
+// FONCTION EXPORT DOCX
 // ============================================================================
-
-function hfhExportDOCX(filename) {
-    console.log('→ hfhExportDOCX appelé avec:', filename);
+function hfhExportDOCX() {
+    console.log('→ hfhExportDOCX appelé');
     
     try {
-        // Vérifier que les bibliothèques sont disponibles
+        // Vérifier les bibliothèques
         if (typeof docx === 'undefined') {
-            alert('ERREUR: Bibliothèque docx non chargée.\nVérifiez que le CDN est accessible.');
+            alert('Erreur: Bibliothèque docx non disponible.');
             return;
         }
         
         if (typeof saveAs === 'undefined') {
-            alert('ERREUR: Bibliothèque FileSaver non chargée.\nVérifiez que le CDN est accessible.');
+            alert('Erreur: Bibliothèque FileSaver non disponible.');
             return;
         }
         
-        const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, Packer } = docx;
+        const { Document, Paragraph, HeadingLevel, AlignmentType, Packer } = docx;
         
-        // Récupérer les valeurs du formulaire
-        const identite = document.querySelector('input[name="identite"]:checked')?.value || 'anonyme';
-        const nomPrenom = document.getElementById('nom-prenom')?.value || '';
-        const lieu = document.getElementById('lieu')?.value || '';
-        const pays = document.getElementById('pays')?.value || '';
-        const dateDebut = document.getElementById('date-debut')?.value || '';
-        const dateFin = document.getElementById('date-fin')?.value || '';
-        const victimes = document.getElementById('victimes')?.value || '';
-        const auteurs = document.getElementById('auteurs')?.value || '';
-        const faits = document.getElementById('faits')?.value || '';
-        const preuves = document.getElementById('preuves')?.value || '';
-        const demandes = document.getElementById('demandes')?.value || '';
-        const resume = document.getElementById('resume')?.value || '';
+        // Récupérer les données avec les IDs EXACTS de votre HTML
+        const identityMode = document.getElementById('identityMode')?.value || 'anonymous';
+        const fullName = document.getElementById('fullName')?.value || '';
+        const residence = document.getElementById('residence')?.value || '';
+        const country = document.getElementById('country')?.value || '';
+        const dateStart = document.getElementById('dateStart')?.value || '';
+        const dateEnd = document.getElementById('dateEnd')?.value || '';
+        const victims = document.getElementById('victims')?.value || '';
+        const allegedAuthors = document.getElementById('allegedAuthors')?.value || '';
+        const facts = document.getElementById('facts')?.value || '';
+        const evidence = document.getElementById('evidence')?.value || '';
+        const requests = document.getElementById('requests')?.value || '';
         
         // Récupérer les violations
         const violations = [];
-        document.querySelectorAll('input[name="violations"]:checked').forEach(cb => {
-            violations.push(cb.nextElementSibling.textContent.trim());
+        document.querySelectorAll('.vio:checked').forEach(cb => {
+            violations.push(cb.value);
         });
         
         // Construire le document
@@ -197,12 +186,11 @@ function hfhExportDOCX(filename) {
                 alignment: AlignmentType.CENTER,
                 italics: true,
             }),
-            new Paragraph({ text: '' }),
             new Paragraph({ text: '' })
         );
         
         // Fonction pour ajouter une section
-        function addDocSection(title, content) {
+        function addSection(title, content) {
             if (content) {
                 sections.push(
                     new Paragraph({
@@ -216,33 +204,32 @@ function hfhExportDOCX(filename) {
         }
         
         // Ajouter les sections
-        if (identite === 'identifie' && nomPrenom) {
-            addDocSection('IDENTITÉ', nomPrenom);
+        if (identityMode === 'identified' && fullName) {
+            addSection('IDENTITÉ', fullName);
         } else {
-            addDocSection('IDENTITÉ', 'Anonyme');
+            addSection('IDENTITÉ', 'Anonyme');
         }
         
-        if (lieu) addDocSection('LIEU DE RÉSIDENCE', lieu);
-        if (pays) addDocSection('PAYS/TERRITOIRE CONCERNÉ', pays);
-        if (dateDebut) addDocSection('PÉRIODE - DÉBUT', dateDebut);
-        if (dateFin) addDocSection('PÉRIODE - FIN', dateFin);
-        if (victimes) addDocSection('VICTIMES / POPULATIONS AFFECTÉES', victimes);
-        if (auteurs) addDocSection('AUTEURS PRÉSUMÉS', auteurs);
+        if (residence) addSection('LIEU DE RÉSIDENCE', residence);
+        if (country) addSection('PAYS/TERRITOIRE CONCERNÉ', country);
+        if (dateStart) addSection('PÉRIODE - DÉBUT', dateStart);
+        if (dateEnd) addSection('PÉRIODE - FIN', dateEnd);
+        if (victims) addSection('VICTIMES / POPULATIONS AFFECTÉES', victims);
+        if (allegedAuthors) addSection('AUTEURS PRÉSUMÉS', allegedAuthors);
         
         if (violations.length > 0) {
-            addDocSection('VIOLATIONS ALLÉGUÉES', violations.join('\n• '));
+            addSection('VIOLATIONS ALLÉGUÉES', violations.join('\n• '));
         }
         
-        if (resume) addDocSection('EXPOSÉ DES FAITS (RÉSUMÉ)', resume);
-        if (faits) addDocSection('FAITS DÉTAILLÉS', faits);
-        if (preuves) addDocSection('PREUVES / ANNEXES', preuves);
-        if (demandes) addDocSection('DEMANDES', demandes);
+        if (facts) addSection('FAITS DÉTAILLÉS', facts);
+        if (evidence) addSection('PREUVES / ANNEXES', evidence);
+        if (requests) addSection('DEMANDES', requests);
         
         // Footer
         sections.push(
             new Paragraph({ text: '' }),
             new Paragraph({
-                text: `HFH - Généré le ${new Date().toLocaleString()}`,
+                text: 'HFH - Généré le ' + new Date().toLocaleString(),
                 alignment: AlignmentType.CENTER,
                 italics: true,
             })
@@ -257,11 +244,11 @@ function hfhExportDOCX(filename) {
         });
         
         // Générer et télécharger
-        Packer.toBlob(doc).then(blob => {
-            const finalFilename = filename || 'HFH_document';
-            saveAs(blob, `${finalFilename}_${Date.now()}.docx`);
-            console.log('✓ DOCX généré avec succès');
-        }).catch(error => {
+        Packer.toBlob(doc).then(function(blob) {
+            const filename = 'HFH_plainte_ONU_' + Date.now() + '.docx';
+            saveAs(blob, filename);
+            console.log('✓ DOCX généré:', filename);
+        }).catch(function(error) {
             console.error('ERREUR DOCX:', error);
             alert('Erreur lors de la génération du DOCX:\n' + error.message);
         });
@@ -273,82 +260,55 @@ function hfhExportDOCX(filename) {
 }
 
 // ============================================================================
-// EXPOSITION GLOBALE FORCÉE - MULTIPLE MÉTHODES
+// EXPOSITION GLOBALE
 // ============================================================================
-
-// Méthode 1: Assignation directe
 window.hfhExportPDF = hfhExportPDF;
 window.hfhExportDOCX = hfhExportDOCX;
 
-// Méthode 2: Via Object.defineProperty (protection contre écrasement)
-try {
-    Object.defineProperty(window, 'hfhExportPDF', {
-        value: hfhExportPDF,
-        writable: false,
-        configurable: false
-    });
-    Object.defineProperty(window, 'hfhExportDOCX', {
-        value: hfhExportDOCX,
-        writable: false,
-        configurable: false
-    });
-} catch (e) {
-    // Déjà défini, on ignore
-}
-
-// Méthode 3: Test de disponibilité
-setTimeout(() => {
-    if (typeof window.hfhExportPDF === 'function') {
-        console.log('✓ hfhExportPDF est accessible globalement');
+// ============================================================================
+// ATTACHER LES EVENT LISTENERS AUX BOUTONS
+// ============================================================================
+function initExportButtons() {
+    console.log('→ Initialisation des boutons d\'export');
+    
+    const btnPDF = document.getElementById('btn-export-pdf');
+    const btnDOCX = document.getElementById('btn-export-docx');
+    
+    if (btnPDF) {
+        btnPDF.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('→ Clic sur bouton PDF');
+            hfhExportPDF();
+        });
+        console.log('✓ Event listener PDF attaché');
     } else {
-        console.error('✗ hfhExportPDF N\'EST PAS accessible globalement');
+        console.error('✗ Bouton PDF non trouvé (id: btn-export-pdf)');
     }
     
-    if (typeof window.hfhExportDOCX === 'function') {
-        console.log('✓ hfhExportDOCX est accessible globalement');
+    if (btnDOCX) {
+        btnDOCX.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('→ Clic sur bouton DOCX');
+            hfhExportDOCX();
+        });
+        console.log('✓ Event listener DOCX attaché');
     } else {
-        console.error('✗ hfhExportDOCX N\'EST PAS accessible globalement');
+        console.error('✗ Bouton DOCX non trouvé (id: btn-export-docx)');
     }
-}, 100);
-
-// ============================================================================
-// EVENT LISTENERS (méthode alternative aux onclick)
-// ============================================================================
+}
 
 // Attendre que le DOM soit chargé
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initEventListeners);
+    document.addEventListener('DOMContentLoaded', initExportButtons);
 } else {
-    initEventListeners();
+    initExportButtons();
 }
 
-function initEventListeners() {
-    console.log('→ Initialisation des event listeners');
-    
-    // Chercher les boutons par leur texte (méthode robuste)
-    const buttons = document.querySelectorAll('button');
-    
-    buttons.forEach(btn => {
-        const text = btn.textContent.toLowerCase();
-        
-        if (text.includes('pdf')) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('→ Clic sur bouton PDF détecté');
-                hfhExportPDF('HFH_plainte_ONU');
-            });
-            console.log('✓ Event listener PDF attaché');
-        }
-        
-        if (text.includes('docx')) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('→ Clic sur bouton DOCX détecté');
-                hfhExportDOCX('HFH_plainte_ONU');
-            });
-            console.log('✓ Event listener DOCX attaché');
-        }
-    });
-}
-
-console.log('✓ pdf-docx.js complètement chargé');
+// Vérification
+setTimeout(function() {
+    if (typeof window.hfhExportPDF === 'function' && typeof window.hfhExportDOCX === 'function') {
+        console.log('✓✓✓ Système HFH opérationnel ✓✓✓');
+    } else {
+        console.error('✗ Erreur: fonctions d\'export non disponibles');
+    }
+}, 200);
