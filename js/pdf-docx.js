@@ -28,7 +28,10 @@ function hfhExportPDF() {
         const dateEnd = document.getElementById('dateEnd')?.value || '';
         const victims = document.getElementById('victims')?.value || '';
         const allegedAuthors = document.getElementById('allegedAuthors')?.value || '';
-        const facts = document.getElementById('facts')?.value || '';
+        const factsDetailed = document.getElementById('factsDetailed')?.value || '';
+const factsSummary = document.getElementById('factsSummary')?.value || '';
+const facts = factsSummary + "\n\n" + factsDetailed;
+
         const evidence = document.getElementById('evidence')?.value || '';
         const requests = document.getElementById('requests')?.value || '';
         
