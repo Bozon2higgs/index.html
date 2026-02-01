@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>HFH — Human For Human</title>
 
-  <meta name="description"
-        content="HFH — Outil local et indépendant pour structurer des faits liés aux violations des droits humains.">
-
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Librairies locales (TOR / OFFLINE OK) -->
+  <!-- Librairies locales -->
   <script src="js/vendor/jspdf.umd.min.js"></script>
   <script src="js/vendor/docx.js"></script>
   <script src="js/vendor/FileSaver.min.js"></script>
@@ -21,59 +18,63 @@
 
 <header class="site-header">
   <div class="header-inner">
-
-    <img
-      src="./assets/logo_77_hfh.png"
-      alt="HFH — Human For Human"
-      class="logo"
-    >
+    <img src="assets/logo_77_hfh.png" alt="HFH" class="logo">
 
     <div class="header-text">
-      <h1>Human For Human</h1>
-      <p>
-        Outil local et indépendant pour structurer des faits.<br>
-        Aucune donnée n’est stockée ou transmise.
+      <h1 data-i18n="title">Human For Human</h1>
+      <p data-i18n="subtitle">
+        Local tool to structure facts related to human rights violations.
       </p>
     </div>
-
   </div>
+
+  <nav class="lang-switch">
+    <button data-lang="fr">FR</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="es">ES</button>
+    <button data-lang="ru">RU</button>
+    <button data-lang="ar">AR</button>
+    <button data-lang="zh">中文</button>
+    <button data-lang="uk">UA</button>
+  </nav>
 </header>
 
 <main>
 
   <section class="card">
-    <h2>Structuration des faits</h2>
+    <h2 data-i18n="section_facts">Structuration of facts</h2>
 
-    <label for="identity">Identité</label>
+    <label data-i18n="identity">Identity</label>
     <select id="identity">
-      <option value="Anonyme">Anonyme</option>
-      <option value="Identifié">Identifié</option>
+      <option value="" data-i18n="anonymous">Anonymous</option>
+      <option value="identified" data-i18n="identified">Identified</option>
     </select>
 
-    <label for="fullname">Nom / Prénom</label>
+    <label data-i18n="fullname">Name / Surname</label>
     <input id="fullname" type="text">
 
-    <label for="country">Pays / Territoire</label>
+    <label data-i18n="country">Country / Territory</label>
     <input id="country" type="text">
 
-    <label for="victims">Victimes / populations affectées</label>
+    <label data-i18n="victims">Victims / affected populations</label>
     <textarea id="victims"></textarea>
 
-    <label for="factsSummary">Résumé des faits</label>
+    <label data-i18n="summary">Summary of facts</label>
     <textarea id="factsSummary"></textarea>
 
-    <label for="factsDetailed">Description détaillée des faits</label>
+    <label data-i18n="details">Detailed description</label>
     <textarea id="factsDetailed"></textarea>
   </section>
 
   <section class="card">
-    <h2>Export local</h2>
-    <button id="exportPDF">Exporter en PDF</button>
-    <button id="exportDOCX">Exporter en DOCX</button>
+    <h2 data-i18n="export">Local export</h2>
+    <button id="exportPDF" data-i18n="export_pdf">Export PDF</button>
+    <button id="exportDOCX" data-i18n="export_docx">Export DOCX</button>
   </section>
 
 </main>
 
+<script src="js/app.js"></script>
 <script src="js/pdf-docx.js"></script>
 
 </body>
