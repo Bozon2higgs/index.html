@@ -9,25 +9,33 @@
   <meta name="description"
         content="HFH — Outil local et indépendant pour structurer des faits liés aux violations des droits humains.">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- ===============================
-       Librairies locales (OBLIGATOIRES)
-  ================================ -->
+  <!-- ==================================================
+       LIBRAIRIES (OBLIGATOIRES POUR PDF / DOCX)
+       Versions stables navigateur
+  ================================================== -->
+
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+
+  <!-- docx (version navigateur stable) -->
+  <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
+
+  <!-- FileSaver -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 
 <body>
 
 <!-- ==================================================
-     HEADER
+     HEADER / IDENTITÉ
 ================================================== -->
 <header class="site-header">
   <div class="brand">
     <img
-      src="assets/logo-hfh.png"
+      src="./assets/logo-hfh.png"
       alt="HFH – Human For Human"
       class="logo"
     >
@@ -35,8 +43,8 @@
     <div class="brand-text">
       <h1>Human For Human</h1>
       <p class="tagline">
-        Outil local et indépendant pour structurer des faits liés
-        aux violations des droits humains.<br>
+        Outil local et indépendant pour structurer des faits liés aux violations
+        des droits humains.<br>
         Aucune donnée n’est stockée ou transmise.
       </p>
     </div>
@@ -48,6 +56,9 @@
 ================================================== -->
 <main>
 
+  <!-- ===============================
+       STRUCTURATION DES FAITS
+  ================================ -->
   <section class="card">
     <h2>Structuration des faits</h2>
 
@@ -73,11 +84,24 @@
     <textarea id="factsDetailed"></textarea>
   </section>
 
+  <!-- ===============================
+       EXPORT LOCAL
+  ================================ -->
   <section class="card">
     <h2>Export local</h2>
 
-    <button id="exportPDF" class="primary-btn">Exporter en PDF</button>
-    <button id="exportDOCX" class="secondary-btn">Exporter en DOCX</button>
+    <p class="helper-text">
+      Les documents sont générés localement sur votre appareil.
+      HFH n’accède à aucune information.
+    </p>
+
+    <button id="exportPDF" class="primary-btn">
+      Exporter en PDF
+    </button>
+
+    <button id="exportDOCX" class="secondary-btn">
+      Exporter en DOCX
+    </button>
   </section>
 
 </main>
