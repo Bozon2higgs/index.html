@@ -6,13 +6,45 @@
   <title>HFH — Human for Human</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .lang-switch { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem }
-    .lang-switch button {
-      padding:4px 10px; border-radius:6px; border:1px solid #ccc;
-      background:#f5f5f5; cursor:pointer; font-size:0.9em
+    /* ================= LANG SWITCH ================= */
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
-    .lang-switch button.active { background:#222; color:#fff; border-color:#222 }
-    .help { font-size:0.85em; color:#666; margin-top:2px }
+
+    .lang-switch button {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #999;
+      background: #f2f2f2;
+      color: #111;               /* TEXTE BIEN VISIBLE */
+      cursor: pointer;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    .lang-switch button:hover {
+      background: #e0e0e0;
+    }
+
+    .lang-switch button.active {
+      background: #111;          /* FOND SOMBRE */
+      color: #fff;               /* TEXTE BLANC */
+      border-color: #111;
+    }
+
+    .lang-switch button:focus {
+      outline: 3px solid #4d90fe; /* ACCESSIBILITÉ CLAVIER */
+      outline-offset: 2px;
+    }
+
+    .help {
+      font-size: 0.85em;
+      color: #555;
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -30,9 +62,9 @@
 <main class="container">
 
 <section class="card">
-  <h2 data-i18n="title">Human For Human — Signalement</h2>
+  <h2 data-i18n="title">Human For Human — Report</h2>
 
-  <!-- ================= LANG SWITCH ================= -->
+  <!-- LANG SWITCH -->
   <div class="lang-switch">
     <button data-lang="fr" class="active">FR</button>
     <button data-lang="en">EN</button>
@@ -44,40 +76,39 @@
   </div>
 
   <p class="muted" data-i18n="intro">
-    Rédigez un signalement de manière locale et confidentielle.
+    Write a report locally and confidentially.
   </p>
 
   <hr />
 
-  <!-- ================= FORM ================= -->
-  <label data-i18n="identity">Identité</label>
+  <label data-i18n="identity">Identity</label>
   <select id="identityMode">
-    <option value="anonymous" data-i18n="anonymous">Anonyme</option>
-    <option value="identified" data-i18n="identified">Identifié</option>
+    <option value="anonymous" data-i18n="anonymous">Anonymous</option>
+    <option value="identified" data-i18n="identified">Identified</option>
   </select>
   <div class="help" data-i18n="identity_help"></div>
 
-  <label data-i18n="name">Nom / Name</label>
+  <label data-i18n="name">Name</label>
   <input id="fullName" type="text" />
   <div class="help" data-i18n="name_help"></div>
 
-  <label data-i18n="country">Pays / Country</label>
+  <label data-i18n="country">Country</label>
   <input id="country" type="text" />
 
-  <label data-i18n="victims">Victimes / Affected populations</label>
+  <label data-i18n="victims">Victims / affected populations</label>
   <textarea id="victims" rows="3"></textarea>
   <div class="help" data-i18n="victims_help"></div>
 
-  <label data-i18n="facts_summary">Résumé des faits</label>
+  <label data-i18n="facts_summary">Facts summary</label>
   <textarea id="factsSummary" rows="4"></textarea>
 
-  <label data-i18n="facts_detailed">Faits détaillés</label>
+  <label data-i18n="facts_detailed">Detailed facts</label>
   <textarea id="factsDetailed" rows="6"></textarea>
 
-  <label data-i18n="evidence">Preuves / Evidence</label>
+  <label data-i18n="evidence">Evidence</label>
   <textarea id="evidence" rows="3"></textarea>
 
-  <label data-i18n="requests">Demandes / Requests</label>
+  <label data-i18n="requests">Requests</label>
   <textarea id="requests" rows="3"></textarea>
 
   <div class="actions">
@@ -92,128 +123,16 @@
   <p>HFH v1.0 — Human for Human • Local-first • No tracking</p>
 </footer>
 
-<!-- ================= I18N SCRIPT ================= -->
+<!-- ================= I18N ================= -->
 <script>
 const i18n = {
-  fr: {
-    title:"Human For Human — Signalement",
-    intro:"Rédigez un signalement de manière locale et confidentielle.",
-    identity:"Identité",
-    anonymous:"Anonyme",
-    identified:"Identifié",
-    identity_help:"Choisissez l’option la plus sûre pour vous.",
-    name:"Nom / Prénom",
-    name_help:"Optionnel. Laissez vide si anonyme.",
-    country:"Pays / Territoire concerné",
-    victims:"Victimes / populations affectées",
-    victims_help:"Qui est affecté ? Combien ? Situation particulière ?",
-    facts_summary:"Résumé des faits",
-    facts_detailed:"Faits détaillés",
-    evidence:"Preuves / annexes",
-    requests:"Demandes"
-  },
-  en: {
-    title:"Human For Human — Report",
-    intro:"Write a report locally and confidentially.",
-    identity:"Identity",
-    anonymous:"Anonymous",
-    identified:"Identified",
-    identity_help:"Choose the safest option for you.",
-    name:"Name",
-    name_help:"Optional. Leave empty if anonymous.",
-    country:"Country / Territory",
-    victims:"Victims / affected populations",
-    victims_help:"Who is affected? How many? Any vulnerability?",
-    facts_summary:"Facts summary",
-    facts_detailed:"Detailed facts",
-    evidence:"Evidence",
-    requests:"Requests"
-  },
-  es: {
-    title:"Human For Human — Informe",
-    intro:"Redacte un informe de forma local y confidencial.",
-    identity:"Identidad",
-    anonymous:"Anónimo",
-    identified:"Identificado",
-    identity_help:"Elija la opción más segura.",
-    name:"Nombre",
-    name_help:"Opcional.",
-    country:"País / Territorio",
-    victims:"Víctimas / poblaciones afectadas",
-    victims_help:"¿Quién está afectado? ¿Cuántos?",
-    facts_summary:"Resumen de los hechos",
-    facts_detailed:"Hechos detallados",
-    evidence:"Pruebas",
-    requests:"Solicitudes"
-  },
-  ru: {
-    title:"Human For Human — Сообщение",
-    intro:"Заполните сообщение локально и конфиденциально.",
-    identity:"Идентификация",
-    anonymous:"Анонимно",
-    identified:"Указано",
-    identity_help:"Выберите самый безопасный вариант.",
-    name:"Имя",
-    name_help:"Необязательно.",
-    country:"Страна",
-    victims:"Пострадавшие",
-    victims_help:"Кто пострадал? Сколько?",
-    facts_summary:"Краткое описание",
-    facts_detailed:"Подробное описание",
-    evidence:"Доказательства",
-    requests:"Запросы"
-  },
-  ar: {
-    title:"Human For Human — بلاغ",
-    intro:"اكتب البلاغ محليًا وبشكل سري.",
-    identity:"الهوية",
-    anonymous:"مجهول",
-    identified:"مُعرف",
-    identity_help:"اختر الخيار الأكثر أمانًا.",
-    name:"الاسم",
-    name_help:"اختياري.",
-    country:"البلد",
-    victims:"الضحايا / المتضررون",
-    victims_help:"من المتأثر؟ كم العدد؟",
-    facts_summary:"ملخص الوقائع",
-    facts_detailed:"تفاصيل الوقائع",
-    evidence:"الأدلة",
-    requests:"الطلبات"
-  },
-  zh: {
-    title:"Human For Human — 报告",
-    intro:"在本地安全地填写报告。",
-    identity:"身份",
-    anonymous:"匿名",
-    identified:"实名",
-    identity_help:"请选择最安全的选项。",
-    name:"姓名",
-    name_help:"可选。",
-    country:"国家",
-    victims:"受影响人群",
-    victims_help:"谁受到影响？多少人？",
-    facts_summary:"事实摘要",
-    facts_detailed:"详细事实",
-    evidence:"证据",
-    requests:"请求"
-  },
-  uk: {
-    title:"Human For Human — Повідомлення",
-    intro:"Заповніть повідомлення локально та конфіденційно.",
-    identity:"Ідентичність",
-    anonymous:"Анонімно",
-    identified:"Вказано",
-    identity_help:"Оберіть найбезпечніший варіант.",
-    name:"Імʼя",
-    name_help:"Необовʼязково.",
-    country:"Країна",
-    victims:"Постраждалі",
-    victims_help:"Хто постраждав? Скільки?",
-    facts_summary:"Короткий опис",
-    facts_detailed:"Детальний опис",
-    evidence:"Докази",
-    requests:"Запити"
-  }
+  fr:{title:"Human For Human — Signalement",intro:"Rédigez un signalement localement et confidentiellement.",identity:"Identité",anonymous:"Anonyme",identified:"Identifié",identity_help:"Choisissez l’option la plus sûre.",name:"Nom",name_help:"Optionnel.",country:"Pays",victims:"Victimes",victims_help:"Qui est affecté ? Combien ?",facts_summary:"Résumé des faits",facts_detailed:"Faits détaillés",evidence:"Preuves",requests:"Demandes"},
+  en:{title:"Human For Human — Report",intro:"Write a report locally and confidentially.",identity:"Identity",anonymous:"Anonymous",identified:"Identified",identity_help:"Choose the safest option.",name:"Name",name_help:"Optional.",country:"Country",victims:"Victims",victims_help:"Who is affected? How many?",facts_summary:"Facts summary",facts_detailed:"Detailed facts",evidence:"Evidence",requests:"Requests"},
+  es:{title:"Human For Human — Informe",intro:"Redacte un informe local y confidencial.",identity:"Identidad",anonymous:"Anónimo",identified:"Identificado",identity_help:"Elija la opción más segura.",name:"Nombre",name_help:"Opcional.",country:"País",victims:"Víctimas",victims_help:"¿Quién está afectado?",facts_summary:"Resumen",facts_detailed:"Hechos detallados",evidence:"Pruebas",requests:"Solicitudes"},
+  ru:{title:"Human For Human — Сообщение",intro:"Заполните сообщение локально.",identity:"Идентификация",anonymous:"Анонимно",identified:"Указано",identity_help:"Выберите безопасный вариант.",name:"Имя",name_help:"Необязательно.",country:"Страна",victims:"Пострадавшие",victims_help:"Кто и сколько?",facts_summary:"Кратко",facts_detailed:"Подробно",evidence:"Доказательства",requests:"Запросы"},
+  ar:{title:"Human For Human — بلاغ",intro:"اكتب البلاغ محليًا وبسرية.",identity:"الهوية",anonymous:"مجهول",identified:"مُعرف",identity_help:"اختر الأكثر أمانًا.",name:"الاسم",name_help:"اختياري.",country:"البلد",victims:"الضحايا",victims_help:"من المتأثر؟",facts_summary:"ملخص",facts_detailed:"تفاصيل",evidence:"الأدلة",requests:"الطلبات"},
+  zh:{title:"Human For Human — 报告",intro:"在本地安全填写报告。",identity:"身份",anonymous:"匿名",identified:"实名",identity_help:"请选择最安全的选项。",name:"姓名",name_help:"可选。",country:"国家",victims:"受影响人群",victims_help:"谁受影响？",facts_summary:"摘要",facts_detailed:"详细",evidence:"证据",requests:"请求"},
+  uk:{title:"Human For Human — Повідомлення",intro:"Заповніть повідомлення локально.",identity:"Ідентичність",anonymous:"Анонімно",identified:"Вказано",identity_help:"Оберіть безпечний варіант.",name:"Імʼя",name_help:"Необовʼязково.",country:"Країна",victims:"Постраждалі",victims_help:"Хто постраждав?",facts_summary:"Коротко",facts_detailed:"Детально",evidence:"Докази",requests:"Запити"}
 };
 
 function setLang(lang){
@@ -225,7 +144,6 @@ function setLang(lang){
   document.querySelector(`[data-lang="${lang}"]`).classList.add("active");
   document.documentElement.lang = lang;
 }
-
 document.querySelectorAll(".lang-switch button").forEach(btn=>{
   btn.addEventListener("click",()=>setLang(btn.dataset.lang));
 });
