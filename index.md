@@ -1,2 +1,0 @@
-# HFH
-Temporary rebuild trigger
