@@ -44,3 +44,17 @@ Il aide uniquement à structurer des faits.
 ## État du projet
 
 HFH est stable, fonctionnel et prêt pour une version 1.0.
+## Usage responsable
+
+HFH est un outil d’aide à la structuration de faits.
+
+Il ne fournit aucune protection juridique, technique ou opérationnelle.
+
+L’utilisateur reste seul responsable de :
+- l’exactitude des informations saisies,
+- la manière dont les documents générés sont utilisés, partagés ou transmis,
+- l’évaluation des risques liés à leur diffusion.
+
+HFH ne conserve aucune donnée et n’a aucun moyen de savoir comment l’outil est utilisé.
+
+Avant tout partage, il est recommandé d’évaluer soigneusement le contexte et les conséquences possibles.
