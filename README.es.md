@@ -44,3 +44,17 @@ Solo ayuda a estructurar información.
 ## Estado del proyecto
 
 HFH es estable, funcional y listo para la versión 1.0.
+## Uso responsable
+
+HFH es una herramienta destinada a ayudar a estructurar información.
+
+No proporciona protección legal, técnica ni operativa.
+
+El usuario es el único responsable de:
+- la exactitud de la información introducida,
+- el uso, la compartición o la transmisión de los documentos generados,
+- la evaluación de los riesgos asociados a su difusión.
+
+HFH no almacena datos ni tiene forma de saber cómo se utiliza la herramienta.
+
+Antes de compartir cualquier documento, se recomienda evaluar cuidadosamente el contexto y las posibles consecuencias.
