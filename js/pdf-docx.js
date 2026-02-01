@@ -1,6 +1,6 @@
 // ============================================================================
 // HFH — Export PDF / DOCX
-// Étape 3.4 — Base juridique (normes et traités internationaux)
+// Étape 3.5 — Signature manuscrite locale (canvas)
 // Local-first • Sans collecte de données
 // ============================================================================
 
@@ -20,90 +20,62 @@ const HFH_I18N = {
   fr: {
     title: "SIGNALEMENT HFH",
     subtitle: "Document généré localement — Confidentiel",
-
     identity: "1. IDENTIFICATION DU SIGNALEMENT",
-    identity_named: name => `1.1 Identité déclarée : ${name}`,
+    identity_named: n => `1.1 Identité déclarée : ${n}`,
     identity_anon: "1.1 Identité déclarée : Anonyme",
     generated: "1.2 Date de génération du document",
-
     affected: "2. PERSONNES OU POPULATIONS AFFECTÉES",
-
     context: "3. CONTEXTE GÉOGRAPHIQUE ET TEMPOREL",
     country: c => `3.1 Pays / territoire : ${c}`,
     start: d => `3.2 Date de début : ${d}`,
     end: d => `3.3 Date de fin : ${d}`,
     ongoing: "3.3 Date de fin : en cours",
-
     authors: "4. AUTEURS PRÉSUMÉS",
     violations: "5. VIOLATIONS ALLÉGUÉES",
-
     facts_summary: "6.1 Résumé des faits",
     facts_detailed: "6.2 Faits détaillés",
-
     evidence: "7. ÉLÉMENTS DE PREUVE DISPONIBLES",
     requests: "8. DEMANDES ADRESSÉES AUX MÉCANISMES INTERNATIONAUX",
-
     legal_basis: "9. BASE JURIDIQUE INTERNATIONALE (INDICATIVE)",
     legal_text:
-      "Les faits décrits ci-dessus peuvent relever, à titre indicatif et non exhaustif, " +
-      "des normes et instruments internationaux suivants :\n\n" +
-      "• Déclaration universelle des droits de l’homme (1948)\n" +
-      "• Pacte international relatif aux droits civils et politiques (PIDCP)\n" +
-      "• Pacte international relatif aux droits économiques, sociaux et culturels (PIDESC)\n" +
-      "• Convention contre la torture et autres peines ou traitements cruels, inhumains ou dégradants\n" +
-      "• Convention relative aux droits de l’enfant (le cas échéant)\n" +
-      "• Conventions de Genève et Protocoles additionnels (le cas échéant)\n\n" +
-      "Cette section est fournie à des fins d’orientation générale et ne constitue pas une qualification juridique définitive.",
-
-    clause_title: "10. CLAUSE FINALE",
+      "Les faits décrits peuvent relever notamment de la Déclaration universelle des droits de l’homme, " +
+      "des Pactes internationaux relatifs aux droits civils et politiques et aux droits économiques, sociaux et culturels, " +
+      "ainsi que d’autres conventions internationales applicables.",
+    signature: "10. SIGNATURE (FACULTATIVE)",
+    clause: "11. CLAUSE FINALE",
     clause_text:
       "Ce document a été généré localement. Aucune donnée n’a été transmise ni stockée.",
-
     footer: (i, t) => `HFH — Page ${i}/${t}`
   },
 
   en: {
     title: "HFH COMMUNICATION",
     subtitle: "Document generated locally — Confidential",
-
     identity: "1. IDENTIFICATION OF THE COMMUNICATION",
-    identity_named: name => `1.1 Declared identity: ${name}`,
+    identity_named: n => `1.1 Declared identity: ${n}`,
     identity_anon: "1.1 Declared identity: Anonymous",
     generated: "1.2 Document generation date",
-
     affected: "2. AFFECTED PERSONS OR POPULATIONS",
-
     context: "3. GEOGRAPHICAL AND TEMPORAL CONTEXT",
     country: c => `3.1 Country / territory: ${c}`,
     start: d => `3.2 Start date: ${d}`,
     end: d => `3.3 End date: ${d}`,
     ongoing: "3.3 End date: ongoing",
-
     authors: "4. ALLEGED PERPETRATORS",
     violations: "5. ALLEGED VIOLATIONS",
-
     facts_summary: "6.1 Summary of facts",
     facts_detailed: "6.2 Detailed facts",
-
     evidence: "7. AVAILABLE EVIDENCE",
     requests: "8. REQUESTS TO INTERNATIONAL MECHANISMS",
-
     legal_basis: "9. INTERNATIONAL LEGAL BASIS (INDICATIVE)",
     legal_text:
-      "The facts described above may fall, on an indicative and non-exhaustive basis, " +
-      "within the scope of the following international norms and instruments:\n\n" +
-      "• Universal Declaration of Human Rights (1948)\n" +
-      "• International Covenant on Civil and Political Rights (ICCPR)\n" +
-      "• International Covenant on Economic, Social and Cultural Rights (ICESCR)\n" +
-      "• Convention against Torture and Other Cruel, Inhuman or Degrading Treatment or Punishment\n" +
-      "• Convention on the Rights of the Child (where applicable)\n" +
-      "• Geneva Conventions and Additional Protocols (where applicable)\n\n" +
-      "This section is provided for general guidance purposes only and does not constitute a definitive legal qualification.",
-
-    clause_title: "10. FINAL CLAUSE",
+      "The facts described may fall under the Universal Declaration of Human Rights, " +
+      "the International Covenants on Civil and Political Rights and on Economic, Social and Cultural Rights, " +
+      "and other applicable international conventions.",
+    signature: "10. SIGNATURE (OPTIONAL)",
+    clause: "11. FINAL CLAUSE",
     clause_text:
       "This document was generated locally. No data was transmitted or stored.",
-
     footer: (i, t) => `HFH — Page ${i}/${t}`
   }
 };
@@ -114,19 +86,26 @@ const HFH_I18N = {
 function getLang() {
   return document.getElementById("langSelect")?.value || "fr";
 }
-
 function t() {
   return HFH_I18N[getLang()] || HFH_I18N.fr;
 }
-
 function getValue(id) {
   return document.getElementById(id)?.value?.trim() || "";
 }
-
 function getViolations() {
   const v = [];
   document.querySelectorAll(".vio:checked").forEach(cb => v.push(cb.value));
   return v;
+}
+function getSignatureDataURL() {
+  const canvas = document.getElementById("signatureCanvas");
+  if (!canvas) return null;
+  const blank = document.createElement("canvas");
+  blank.width = canvas.width;
+  blank.height = canvas.height;
+  return canvas.toDataURL() !== blank.toDataURL()
+    ? canvas.toDataURL("image/png")
+    : null;
 }
 
 // ============================================================================
@@ -140,16 +119,17 @@ function hfhExportPDF() {
 
     const identityMode = getValue("identityMode") || "anonymous";
     const fullName = getValue("fullName");
+    const victims = getValue("victims");
     const country = getValue("country");
     const dateStart = getValue("dateStart");
     const dateEnd = getValue("dateEnd");
-    const victims = getValue("victims");
     const allegedAuthors = getValue("allegedAuthors");
     const factsSummary = getValue("factsSummary");
     const factsDetailed = getValue("factsDetailed");
     const evidence = getValue("evidence");
     const requests = getValue("requests");
     const violations = getViolations();
+    const signature = getSignatureDataURL();
 
     const doc = new jsPDF();
     let y = 20;
@@ -159,7 +139,7 @@ function hfhExportPDF() {
 
     function addSection(title, content) {
       if (!content) return;
-      if (y > 270) {
+      if (y > 260) {
         doc.addPage();
         y = 20;
       }
@@ -184,12 +164,9 @@ function hfhExportPDF() {
     doc.setFontSize(18).setFont(undefined, "bold");
     doc.text(TXT.title, margin, y);
     y += lh * 2;
-
-    doc.setFontSize(10).setFont(undefined, "normal");
-    doc.text(TXT.subtitle, margin, y);
+    doc.setFontSize(10).text(TXT.subtitle, margin, y);
     y += lh * 2;
 
-    // Sections
     addSection(
       TXT.identity,
       identityMode === "identified" && fullName
@@ -199,7 +176,6 @@ function hfhExportPDF() {
 
     addSection(TXT.generated, new Date().toLocaleDateString());
     addSection(TXT.affected, victims);
-
     addSection(
       TXT.context,
       [
@@ -208,7 +184,6 @@ function hfhExportPDF() {
         dateEnd ? TXT.end(dateEnd) : TXT.ongoing
       ].filter(Boolean).join("\n")
     );
-
     addSection(TXT.authors, allegedAuthors);
     addSection(
       TXT.violations,
@@ -218,14 +193,16 @@ function hfhExportPDF() {
     addSection(TXT.facts_detailed, factsDetailed);
     addSection(TXT.evidence, evidence);
     addSection(TXT.requests, requests);
-
-    // === BASE JURIDIQUE ===
     addSection(TXT.legal_basis, TXT.legal_text);
 
-    // Clause finale
-    addSection(TXT.clause_title, TXT.clause_text);
+    if (signature) {
+      addSection(TXT.signature, "");
+      doc.addImage(signature, "PNG", margin, y, 60, 25);
+      y += 35;
+    }
 
-    // Footer
+    addSection(TXT.clause, TXT.clause_text);
+
     const pageCount = doc.internal.getNumberOfPages();
     doc.setFontSize(8).setTextColor(120);
     for (let i = 1; i <= pageCount; i++) {
@@ -250,20 +227,21 @@ function hfhExportDOCX() {
   try {
     if (typeof docx === "undefined" || typeof saveAs !== "function") return;
     const TXT = t();
-    const { Document, Paragraph, HeadingLevel, AlignmentType, Packer } = docx;
+    const { Document, Paragraph, HeadingLevel, AlignmentType, Packer, ImageRun } = docx;
 
     const identityMode = getValue("identityMode") || "anonymous";
     const fullName = getValue("fullName");
+    const victims = getValue("victims");
     const country = getValue("country");
     const dateStart = getValue("dateStart");
     const dateEnd = getValue("dateEnd");
-    const victims = getValue("victims");
     const allegedAuthors = getValue("allegedAuthors");
     const factsSummary = getValue("factsSummary");
     const factsDetailed = getValue("factsDetailed");
     const evidence = getValue("evidence");
     const requests = getValue("requests");
     const violations = getViolations();
+    const signature = getSignatureDataURL();
 
     const sections = [];
 
@@ -299,7 +277,6 @@ function hfhExportDOCX() {
 
     addSection(TXT.generated, new Date().toLocaleDateString());
     addSection(TXT.affected, victims);
-
     addSection(
       TXT.context,
       [
@@ -308,7 +285,6 @@ function hfhExportDOCX() {
         dateEnd ? TXT.end(dateEnd) : TXT.ongoing
       ].filter(Boolean).join("\n")
     );
-
     addSection(TXT.authors, allegedAuthors);
     addSection(
       TXT.violations,
@@ -318,12 +294,27 @@ function hfhExportDOCX() {
     addSection(TXT.facts_detailed, factsDetailed);
     addSection(TXT.evidence, evidence);
     addSection(TXT.requests, requests);
-
-    // === BASE JURIDIQUE ===
     addSection(TXT.legal_basis, TXT.legal_text);
 
-    // Clause finale
-    addSection(TXT.clause_title, TXT.clause_text);
+    if (signature) {
+      sections.push(
+        new Paragraph({
+          text: TXT.signature,
+          heading: HeadingLevel.HEADING_1
+        }),
+        new Paragraph({
+          children: [
+            new ImageRun({
+              data: signature,
+              transformation: { width: 200, height: 80 }
+            })
+          ]
+        }),
+        new Paragraph({ text: "" })
+      );
+    }
+
+    addSection(TXT.clause, TXT.clause_text);
 
     const doc = new Document({
       sections: [{ children: sections }]
