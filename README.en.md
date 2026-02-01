@@ -44,3 +44,17 @@ It only helps structure information.
 ## Project status
 
 HFH is stable, functional, and ready for version 1.0.
+## Responsible use
+
+HFH is a tool designed to help structure information.
+
+It does not provide legal, technical, or operational protection.
+
+The user remains solely responsible for:
+- the accuracy of the information entered,
+- how the generated documents are used, shared, or transmitted,
+- assessing the risks associated with their disclosure.
+
+HFH does not store any data and has no way of knowing how the tool is used.
+
+Before sharing any document, users are encouraged to carefully assess the context and potential consequences.
