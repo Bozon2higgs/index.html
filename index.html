@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HFH</title>
+  <title>HFH — Human for Human</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -11,10 +11,9 @@
 <header class="site-header">
   <div class="brand">
     <img src="assets/logo_hfh.png" alt="HFH" class="logo" />
-
     <div>
       <h1 class="brand-title">HFH</h1>
-      <p class="brand-subtitle">Local-first • Sans collecte de données</p>
+      <p class="brand-subtitle">Human for Human</p>
     </div>
   </div>
 </header>
@@ -27,105 +26,78 @@
     <select id="langSelect">
       <option value="fr" selected>Français</option>
       <option value="en">English</option>
-      <option value="es">Español</option>
-      <option value="ru">Русский</option>
-      <option value="ar">العربية</option>
-      <option value="zh">中文</option>
     </select>
 
     <p class="muted">
-      Le document est généré localement sur votre appareil. Aucun envoi automatique.
+      Le document est généré localement sur votre appareil.  
+      Aucune donnée n’est transmise.
     </p>
 
     <hr />
 
-<div class="grid">
-  <div>
-    <label for="identityMode">Identité</label>
-    <select id="identityMode">
-      <option value="identified" selected>Identifié</option>
-      <option value="anonymous">Anonyme</option>
-    </select>
-  </div>
+    <div class="grid">
+      <div>
+        <label for="identityMode">Identité</label>
+        <select id="identityMode">
+          <option value="identified" selected>Identifié</option>
+          <option value="anonymous">Anonyme</option>
+        </select>
+      </div>
 
-  <div>
-    <label for="fullName">Nom / Prénom</label>
-    <input id="fullName" type="text" placeholder="Ex : Higgs Boson" value="Higgs Boson" />
-  </div>
+      <div>
+        <label for="fullName">Nom / Prénom</label>
+        <input id="fullName" type="text" placeholder="Ex : Nom Prénom" />
+      </div>
 
-  <div>
-    <label for="residence">Lieu de résidence (optionnel)</label>
-    <input id="residence" type="text" placeholder="Ex : Espace-Temps Infini" value="Espace-Temps Infini" />
-  </div>
+      <div>
+        <label for="country">Pays / Territoire concerné</label>
+        <input id="country" type="text" placeholder="Ex : France" />
+      </div>
 
-  <div>
-    <label for="country">Pays / Territoire concerné</label>
-    <input id="country" type="text" placeholder="Ex : France / Palestine / Mali…" />
-  </div>
+      <div>
+        <label for="dateStart">Date début</label>
+        <input id="dateStart" type="date" />
+      </div>
 
-  <div>
-    <label for="dateStart">Date début</label>
-    <input id="dateStart" type="date" />
-  </div>
+      <div>
+        <label for="dateEnd">Date fin</label>
+        <input id="dateEnd" type="date" />
+      </div>
+    </div>
 
-  <div>
-    <label for="dateEnd">Date fin</label>
-    <input id="dateEnd" type="date" />
-  </div>
-</div>
+    <label for="victims">Victimes / populations affectées</label>
+    <textarea id="victims" rows="3"></textarea>
 
-<label for="victims">Victimes / populations affectées</label>
-<textarea id="victims" rows="3" placeholder="Décris qui est affecté (groupes, nombres, profils, vulnérabilités)…"></textarea>
+    <label for="allegedAuthors">Auteurs présumés</label>
+    <textarea id="allegedAuthors" rows="3"></textarea>
 
-<label for="allegedAuthors">Auteurs présumés / responsables (si connus)</label>
-<textarea id="allegedAuthors" rows="3" placeholder="Institutions, groupes, individus, chaînes de commandement (si connus)…"></textarea>
+    <label>Violations alléguées</label>
+    <div class="checks">
+      <label><input type="checkbox" class="vio" value="Violences contre civils"> Violences contre civils</label>
+      <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
+      <label><input type="checkbox" class="vio" value="Torture"> Torture / mauvais traitements</label>
+      <label><input type="checkbox" class="vio" value="Discrimination"> Discrimination / persécution</label>
+    </div>
 
-<label>Violations alléguées (sélection indicative)</label>
-<div class="checks">
-  <label><input type="checkbox" class="vio" value="Violences/attaques contre civils"> Violences/attaques contre civils</label>
-  <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
-  <label><input type="checkbox" class="vio" value="Torture / mauvais traitements"> Torture / mauvais traitements</label>
-  <label><input type="checkbox" class="vio" value="Discrimination / persécution"> Discrimination / persécution</label>
-  <label><input type="checkbox" class="vio" value="Déplacements forcés"> Déplacements forcés</label>
-  <label><input type="checkbox" class="vio" value="Atteintes à la liberté d’expression"> Atteintes à la liberté d’expression</label>
-  <label><input type="checkbox" class="vio" value="Violences sexuelles"> Violences sexuelles</label>
-  <label><input type="checkbox" class="vio" value="Atteintes aux droits économiques et sociaux"> Atteintes aux droits économiques et sociaux</label>
-</div>
+    <label for="factsSummary">Exposé des faits (résumé)</label>
+    <textarea id="factsSummary" rows="6"></textarea>
 
+    <label for="factsDetailed">Faits détaillés</label>
+    <textarea id="factsDetailed" rows="8"></textarea>
 
-<label for="evidence">Preuves / annexes (liste)</label>
-<textarea id="evidence" rows="4" placeholder="Ex : photos, vidéos, rapports, articles, documents, témoignages…"></textarea>
+    <label for="evidence">Preuves / annexes</label>
+    <textarea id="evidence" rows="4"></textarea>
 
-<label for="requests">Demandes (ce que vous sollicitez)</label>
-<textarea id="requests" rows="4" placeholder="Ex : enquête, communication urgente, mesures provisoires, recommandations, suivi…"></textarea>
-
-<textarea
-  id="factsSummary"
-  rows="7"
-  placeholder="Résumé chronologique et synthétique des faits (dates, lieux, acteurs principaux)">
-</textarea>
-
-
-<label for="factsDetailed">Faits détaillés</label>
-<textarea
-  id="factsDetailed"
-  rows="8"
-  placeholder="Description détaillée des faits, victimes, violations, preuves disponibles">
-</textarea>
+    <label for="requests">Demandes</label>
+    <textarea id="requests" rows="4"></textarea>
 
     <div class="actions">
-     <button id="btn-export-pdf">Exporter en PDF (ONU)</button>
-<button id="btn-export-docx">Exporter en DOCX (édition)</button>
-<!-- IDs utilisés par pdf-docx.js — ne pas modifier -->
-
-
-
-
-
+      <button id="btn-export-pdf">Exporter en PDF (ONU)</button>
+      <button id="btn-export-docx">Exporter en DOCX</button>
     </div>
 
     <p class="muted">
-      <a href="how-to.html" data-i18n="guide">Guide ONU</a>
+      <a href="./about.html">À propos de HFH</a>
     </p>
   </section>
 </main>
@@ -133,38 +105,18 @@
 <footer class="footer">
   <p>
     HFH v1.0 — Human for Human • Local-first •
-    <a href="about.html">À propos</a>
+    <a href="./about.html">À propos</a>
   </p>
 </footer>
 
-
-<!-- Libs export PDF / DOCX -->
+<!-- Librairies -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-<!-- Scripts locaux -->
-
+<!-- Scripts -->
 <script src="js/multilingual.js"></script>
 <script src="js/pdf-docx.js"></script>
 
-<!-- Initialisation langue -->
-<script>
-  const langSelect = document.getElementById("langSelect");
-  if (langSelect) {
-    langSelect.addEventListener("change", (e) => {
-      if (typeof setLanguage === "function") setLanguage(e.target.value);
-    });
-
-    const browserLang = (navigator.language || "fr").slice(0, 2);
-    const supported = ["fr", "en", "es", "ru", "ar", "zh"];
-    const chosen = supported.includes(browserLang) ? browserLang : "fr";
-    langSelect.value = chosen;
-    if (typeof setLanguage === "function") setLanguage(chosen);
-  }
-</script>
-
-
 </body>
 </html>
-Suppression définitive de id=facts, champs résumé/détaillé figés
