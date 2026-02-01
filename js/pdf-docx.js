@@ -1,23 +1,17 @@
-/* ==================================================
-   HFH — Export PDF & DOCX (STABLE)
-   ================================================== */
-
 function v(id) {
   const el = document.getElementById(id);
   return el ? el.value.trim() : "";
 }
 
-/* ===============================
-   PDF
-================================ */
-document.getElementById("exportPDF")?.addEventListener("click", () => {
+/* ========= PDF ========= */
+document.getElementById("exportPDF").addEventListener("click", () => {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF();
   let y = 20;
 
   pdf.setFontSize(16);
   pdf.text("Human For Human", 20, y);
-  y += 8;
+  y += 10;
 
   pdf.setFontSize(10);
   pdf.text(
@@ -26,9 +20,7 @@ document.getElementById("exportPDF")?.addEventListener("click", () => {
     20,
     y
   );
-  y += 14;
-
-  pdf.setFontSize(11);
+  y += 15;
 
   [
     ["Identité", v("identity")],
@@ -46,23 +38,15 @@ document.getElementById("exportPDF")?.addEventListener("click", () => {
     pdf.setFont(undefined, "normal");
     const txt = pdf.splitTextToSize(c, 170);
     pdf.text(txt, 20, y);
-    y += txt.length * 6 + 4;
+    y += txt.length * 6 + 6;
   });
 
   pdf.save("HFH_document.pdf");
 });
 
-/* ===============================
-   DOCX
-================================ */
-document.getElementById("exportDOCX")?.addEventListener("click", () => {
-  const {
-    Document,
-    Packer,
-    Paragraph,
-    TextRun,
-    HeadingLevel
-  } = window.docx;
+/* ========= DOCX ========= */
+document.getElementById("exportDOCX").addEventListener("click", () => {
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel } = window.docx;
 
   const doc = new Document({
     sections: [{
