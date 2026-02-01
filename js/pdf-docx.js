@@ -1,316 +1,243 @@
 // ============================================================================
-// HFH - Export PDF/DOCX - Version corrigée pour IDs exacts
+// HFH — Export PDF / DOCX (local-first, sécurisé, stable)
 // ============================================================================
 
+/**
+ * Vérification minimale des bibliothèques (signal développeur uniquement)
+ */
+(function checkLibs() {
+  if (!window.jspdf) {
+    console.error("HFH: bibliothèque jsPDF manquante");
+  }
+  if (typeof docx === "undefined") {
+    console.error("HFH: bibliothèque docx manquante");
+  }
+  if (typeof saveAs !== "function") {
+    console.error("HFH: bibliothèque FileSaver manquante");
+  }
+})();
 
 // ============================================================================
-// FONCTION EXPORT PDF
+// UTILITAIRE — récupération sécurisée des faits
+// ============================================================================
+function getFactsCombined() {
+  const factsSummary =
+    document.getElementById("factsSummary")?.value?.trim() || "";
+
+  const factsDetailed =
+    document.getElementById("factsDetailed")?.value?.trim() || "";
+
+  return [factsSummary, factsDetailed].filter(Boolean).join("\n\n");
+}
+
+// ============================================================================
+// EXPORT PDF
 // ============================================================================
 function hfhExportPDF() {
-   
-    
-    try {
-        // Vérifier jsPDF
-        if (typeof window.jspdf === 'undefined' && typeof jsPDF === 'undefined') {
-            alert('Erreur: Bibliothèque jsPDF non disponible.');
-            return;
-        }
-        
-        const { jsPDF } = window.jspdf || window;
-        
-        // Récupérer les données avec les IDs EXACTS de votre HTML
-        const identityMode = document.getElementById('identityMode')?.value || 'anonymous';
-        const fullName = document.getElementById('fullName')?.value || '';
-        const residence = document.getElementById('residence')?.value || '';
-        const country = document.getElementById('country')?.value || '';
-        const dateStart = document.getElementById('dateStart')?.value || '';
-        const dateEnd = document.getElementById('dateEnd')?.value || '';
-        const victims = document.getElementById('victims')?.value || '';
-        const allegedAuthors = document.getElementById('allegedAuthors')?.value || '';
-        const factsDetailed = document.getElementById('factsDetailed')?.value || '';
-const factsSummary = document.getElementById('factsSummary')?.value || '';
-const facts = factsSummary + "\n\n" + factsDetailed;
-
-        const evidence = document.getElementById('evidence')?.value || '';
-        const requests = document.getElementById('requests')?.value || '';
-        
-        // Récupérer les violations cochées
-        const violations = [];
-        document.querySelectorAll('.vio:checked').forEach(cb => {
-            violations.push(cb.value);
-        });
-        
-        // Créer le PDF
-        const doc = new jsPDF();
-        let y = 20;
-        const lineHeight = 7;
-        const margin = 20;
-        const maxWidth = 170;
-        
-        // En-tête
-        doc.setFontSize(18);
-        doc.setFont(undefined, 'bold');
-        doc.text('SIGNALEMENT HFH', margin, y);
-        y += lineHeight * 2;
-        
-        doc.setFontSize(10);
-        doc.setFont(undefined, 'normal');
-        doc.text('Document généré localement - Confidentiel', margin, y);
-        y += lineHeight * 2;
-        
-        // Fonction pour ajouter une section
-        function addSection(title, content) {
-            if (y > 270) {
-                doc.addPage();
-                y = 20;
-            }
-            
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.text(title, margin, y);
-            y += lineHeight;
-            
-            if (content) {
-                doc.setFontSize(10);
-                doc.setFont(undefined, 'normal');
-                const lines = doc.splitTextToSize(content, maxWidth);
-                lines.forEach(line => {
-                    if (y > 280) {
-                        doc.addPage();
-                        y = 20;
-                    }
-                    doc.text(line, margin, y);
-                    y += lineHeight;
-                });
-            }
-            y += lineHeight;
-        }
-        
-        // Ajouter les sections
-        if (identityMode === 'identified' && fullName) {
-            addSection('IDENTITÉ', fullName);
-        } else {
-            addSection('IDENTITÉ', 'Anonyme');
-        }
-        
-        if (residence) addSection('LIEU DE RÉSIDENCE', residence);
-        if (country) addSection('PAYS/TERRITOIRE CONCERNÉ', country);
-        if (dateStart) addSection('PÉRIODE - DÉBUT', dateStart);
-        if (dateEnd) addSection('PÉRIODE - FIN', dateEnd);
-        if (victims) addSection('VICTIMES / POPULATIONS AFFECTÉES', victims);
-        if (allegedAuthors) addSection('AUTEURS PRÉSUMÉS', allegedAuthors);
-        
-        if (violations.length > 0) {
-            addSection('VIOLATIONS ALLÉGUÉES', violations.join('\n• '));
-        }
-        
-        if (facts) addSection('FAITS DÉTAILLÉS', facts);
-        if (evidence) addSection('PREUVES / ANNEXES', evidence);
-        if (requests) addSection('DEMANDES', requests);
-        
-        // Footer
-        doc.setFontSize(8);
-        doc.setTextColor(128);
-        const pageCount = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-            doc.setPage(i);
-            doc.text(
-                'HFH - Page ' + i + '/' + pageCount + ' - ' + new Date().toLocaleDateString(),
-                margin,
-                doc.internal.pageSize.getHeight() - 10
-            );
-        }
-        
-        // Télécharger
-        const filename = 'HFH_plainte_ONU_' + Date.now() + '.pdf';
-        doc.save(filename);
-        
-        console.log('✓ PDF généré:', filename);
-        
-    } catch (error) {
-        console.error('ERREUR PDF:', error);
-        alert('Erreur lors de la génération du PDF:\n' + error.message);
+  try {
+    if (!window.jspdf) {
+      console.error("HFH PDF: jsPDF indisponible");
+      return;
     }
+
+    const { jsPDF } = window.jspdf;
+
+    // Données formulaire
+    const identityMode = document.getElementById("identityMode")?.value || "anonymous";
+    const fullName = document.getElementById("fullName")?.value || "";
+    const residence = document.getElementById("residence")?.value || "";
+    const country = document.getElementById("country")?.value || "";
+    const dateStart = document.getElementById("dateStart")?.value || "";
+    const dateEnd = document.getElementById("dateEnd")?.value || "";
+    const victims = document.getElementById("victims")?.value || "";
+    const allegedAuthors = document.getElementById("allegedAuthors")?.value || "";
+    const evidence = document.getElementById("evidence")?.value || "";
+    const requests = document.getElementById("requests")?.value || "";
+    const facts = getFactsCombined();
+
+    const violations = [];
+    document.querySelectorAll(".vio:checked").forEach(cb =>
+      violations.push(cb.value)
+    );
+
+    // Création PDF
+    const doc = new jsPDF();
+    let y = 20;
+    const margin = 20;
+    const lineHeight = 7;
+    const maxWidth = 170;
+
+    function addSection(title, content) {
+      if (!content) return;
+
+      if (y > 270) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.setFontSize(12).setFont(undefined, "bold");
+      doc.text(title, margin, y);
+      y += lineHeight;
+
+      doc.setFontSize(10).setFont(undefined, "normal");
+      const lines = doc.splitTextToSize(content, maxWidth);
+
+      lines.forEach(line => {
+        if (y > 280) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(line, margin, y);
+        y += lineHeight;
+      });
+
+      y += lineHeight;
+    }
+
+    // En-tête
+    doc.setFontSize(18).setFont(undefined, "bold");
+    doc.text("SIGNALEMENT HFH", margin, y);
+    y += lineHeight * 2;
+
+    doc.setFontSize(10).setFont(undefined, "normal");
+    doc.text("Document généré localement — Confidentiel", margin, y);
+    y += lineHeight * 2;
+
+    // Sections
+    addSection("IDENTITÉ", identityMode === "identified" && fullName ? fullName : "Anonyme");
+    addSection("LIEU DE RÉSIDENCE", residence);
+    addSection("PAYS / TERRITOIRE CONCERNÉ", country);
+    addSection("PÉRIODE — DÉBUT", dateStart);
+    addSection("PÉRIODE — FIN", dateEnd);
+    addSection("VICTIMES / POPULATIONS AFFECTÉES", victims);
+    addSection("AUTEURS PRÉSUMÉS", allegedAuthors);
+    addSection("VIOLATIONS ALLÉGUÉES", violations.length ? "• " + violations.join("\n• ") : "");
+    addSection("FAITS", facts);
+    addSection("PREUVES / ANNEXES", evidence);
+    addSection("DEMANDES", requests);
+
+    // Footer
+    const pageCount = doc.internal.getNumberOfPages();
+    doc.setFontSize(8).setTextColor(120);
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.text(
+        `HFH — Page ${i}/${pageCount} — ${new Date().toLocaleDateString()}`,
+        margin,
+        doc.internal.pageSize.getHeight() - 10
+      );
+    }
+
+    doc.save(`HFH_plainte_ONU_${Date.now()}.pdf`);
+  } catch (err) {
+    console.error("HFH PDF:", err);
+  }
 }
 
 // ============================================================================
-// FONCTION EXPORT DOCX
+// EXPORT DOCX
 // ============================================================================
 function hfhExportDOCX() {
-    console.log('→ hfhExportDOCX appelé');
-    
-    try {
-        // Vérifier les bibliothèques
-        if (typeof docx === 'undefined') {
-            alert('Erreur: Bibliothèque docx non disponible.');
-            return;
-        }
-        
-        if (typeof saveAs === 'undefined') {
-            alert('Erreur: Bibliothèque FileSaver non disponible.');
-            return;
-        }
-        
-        const { Document, Paragraph, HeadingLevel, AlignmentType, Packer } = docx;
-        
-        // Récupérer les données avec les IDs EXACTS de votre HTML
-        const identityMode = document.getElementById('identityMode')?.value || 'anonymous';
-        const fullName = document.getElementById('fullName')?.value || '';
-        const residence = document.getElementById('residence')?.value || '';
-        const country = document.getElementById('country')?.value || '';
-        const dateStart = document.getElementById('dateStart')?.value || '';
-        const dateEnd = document.getElementById('dateEnd')?.value || '';
-        const victims = document.getElementById('victims')?.value || '';
-        const allegedAuthors = document.getElementById('allegedAuthors')?.value || '';
-        const facts = document.getElementById('facts')?.value || '';
-        const evidence = document.getElementById('evidence')?.value || '';
-        const requests = document.getElementById('requests')?.value || '';
-        
-        // Récupérer les violations
-        const violations = [];
-        document.querySelectorAll('.vio:checked').forEach(cb => {
-            violations.push(cb.value);
-        });
-        
-        // Construire le document
-        const sections = [];
-        
-        // En-tête
-        sections.push(
-            new Paragraph({
-                text: 'SIGNALEMENT HFH',
-                heading: HeadingLevel.TITLE,
-                alignment: AlignmentType.CENTER,
-            }),
-            new Paragraph({ text: '' }),
-            new Paragraph({
-                text: 'Document généré localement - Confidentiel',
-                alignment: AlignmentType.CENTER,
-                italics: true,
-            }),
-            new Paragraph({ text: '' })
-        );
-        
-        // Fonction pour ajouter une section
-        function addSection(title, content) {
-            if (content) {
-                sections.push(
-                    new Paragraph({
-                        text: title,
-                        heading: HeadingLevel.HEADING_1,
-                    }),
-                    new Paragraph({ text: content }),
-                    new Paragraph({ text: '' })
-                );
-            }
-        }
-        
-        // Ajouter les sections
-        if (identityMode === 'identified' && fullName) {
-            addSection('IDENTITÉ', fullName);
-        } else {
-            addSection('IDENTITÉ', 'Anonyme');
-        }
-        
-        if (residence) addSection('LIEU DE RÉSIDENCE', residence);
-        if (country) addSection('PAYS/TERRITOIRE CONCERNÉ', country);
-        if (dateStart) addSection('PÉRIODE - DÉBUT', dateStart);
-        if (dateEnd) addSection('PÉRIODE - FIN', dateEnd);
-        if (victims) addSection('VICTIMES / POPULATIONS AFFECTÉES', victims);
-        if (allegedAuthors) addSection('AUTEURS PRÉSUMÉS', allegedAuthors);
-        
-        if (violations.length > 0) {
-            addSection('VIOLATIONS ALLÉGUÉES', violations.join('\n• '));
-        }
-        
-        if (facts) addSection('FAITS DÉTAILLÉS', facts);
-        if (evidence) addSection('PREUVES / ANNEXES', evidence);
-        if (requests) addSection('DEMANDES', requests);
-        
-        // Footer
-        sections.push(
-            new Paragraph({ text: '' }),
-            new Paragraph({
-                text: 'HFH - Généré le ' + new Date().toLocaleString(),
-                alignment: AlignmentType.CENTER,
-                italics: true,
-            })
-        );
-        
-        // Créer le document
-        const doc = new Document({
-            sections: [{
-                properties: {},
-                children: sections,
-            }],
-        });
-        
-        // Générer et télécharger
-        Packer.toBlob(doc).then(function(blob) {
-            const filename = 'HFH_plainte_ONU_' + Date.now() + '.docx';
-            saveAs(blob, filename);
-            console.log('✓ DOCX généré:', filename);
-        }).catch(function(error) {
-            console.error('ERREUR DOCX:', error);
-            alert('Erreur lors de la génération du DOCX:\n' + error.message);
-        });
-        
-    } catch (error) {
-        console.error('ERREUR DOCX:', error);
-        alert('Erreur lors de la génération du DOCX:\n' + error.message);
+  try {
+    if (typeof docx === "undefined" || typeof saveAs !== "function") {
+      console.error("HFH DOCX: bibliothèques manquantes");
+      return;
     }
+
+    const { Document, Paragraph, HeadingLevel, AlignmentType, Packer } = docx;
+
+    const identityMode = document.getElementById("identityMode")?.value || "anonymous";
+    const fullName = document.getElementById("fullName")?.value || "";
+    const residence = document.getElementById("residence")?.value || "";
+    const country = document.getElementById("country")?.value || "";
+    const dateStart = document.getElementById("dateStart")?.value || "";
+    const dateEnd = document.getElementById("dateEnd")?.value || "";
+    const victims = document.getElementById("victims")?.value || "";
+    const allegedAuthors = document.getElementById("allegedAuthors")?.value || "";
+    const evidence = document.getElementById("evidence")?.value || "";
+    const requests = document.getElementById("requests")?.value || "";
+    const facts = getFactsCombined();
+
+    const violations = [];
+    document.querySelectorAll(".vio:checked").forEach(cb =>
+      violations.push(cb.value)
+    );
+
+    const sections = [];
+
+    function addSection(title, content) {
+      if (!content) return;
+      sections.push(
+        new Paragraph({ text: title, heading: HeadingLevel.HEADING_1 }),
+        new Paragraph({ text: content }),
+        new Paragraph({ text: "" })
+      );
+    }
+
+    sections.push(
+      new Paragraph({
+        text: "SIGNALEMENT HFH",
+        heading: HeadingLevel.TITLE,
+        alignment: AlignmentType.CENTER
+      }),
+      new Paragraph({
+        text: "Document généré localement — Confidentiel",
+        alignment: AlignmentType.CENTER,
+        italics: true
+      }),
+      new Paragraph({ text: "" })
+    );
+
+    addSection("IDENTITÉ", identityMode === "identified" && fullName ? fullName : "Anonyme");
+    addSection("LIEU DE RÉSIDENCE", residence);
+    addSection("PAYS / TERRITOIRE CONCERNÉ", country);
+    addSection("PÉRIODE — DÉBUT", dateStart);
+    addSection("PÉRIODE — FIN", dateEnd);
+    addSection("VICTIMES / POPULATIONS AFFECTÉES", victims);
+    addSection("AUTEURS PRÉSUMÉS", allegedAuthors);
+    addSection("VIOLATIONS ALLÉGUÉES", violations.length ? "• " + violations.join("\n• ") : "");
+    addSection("FAITS", facts);
+    addSection("PREUVES / ANNEXES", evidence);
+    addSection("DEMANDES", requests);
+
+    sections.push(
+      new Paragraph({
+        text: `HFH — Généré le ${new Date().toLocaleString()}`,
+        alignment: AlignmentType.CENTER,
+        italics: true
+      })
+    );
+
+    const doc = new Document({
+      sections: [{ children: sections }]
+    });
+
+    Packer.toBlob(doc).then(blob => {
+      saveAs(blob, `HFH_plainte_ONU_${Date.now()}.docx`);
+    });
+  } catch (err) {
+    console.error("HFH DOCX:", err);
+  }
 }
 
 // ============================================================================
-// EXPOSITION GLOBALE
+// EXPOSITION & LISTENERS
 // ============================================================================
 window.hfhExportPDF = hfhExportPDF;
 window.hfhExportDOCX = hfhExportDOCX;
 
-// ============================================================================
-// ATTACHER LES EVENT LISTENERS AUX BOUTONS
-// ============================================================================
-function initExportButtons() {
-    console.log('→ Initialisation des boutons d\'export');
-    
-    const btnPDF = document.getElementById('btn-export-pdf');
-    const btnDOCX = document.getElementById('btn-export-docx');
-    
-    if (btnPDF) {
-        btnPDF.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('→ Clic sur bouton PDF');
-            hfhExportPDF();
-        });
-        console.log('✓ Event listener PDF attaché');
-    } else {
-        console.error('✗ Bouton PDF non trouvé (id: btn-export-pdf)');
-    }
-    
-    if (btnDOCX) {
-        btnDOCX.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('→ Clic sur bouton DOCX');
-            hfhExportDOCX();
-        });
-        console.log('✓ Event listener DOCX attaché');
-    } else {
-        console.error('✗ Bouton DOCX non trouvé (id: btn-export-docx)');
-    }
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const btnPDF = document.getElementById("btn-export-pdf");
+  const btnDOCX = document.getElementById("btn-export-docx");
 
-// Attendre que le DOM soit chargé
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initExportButtons);
-} else {
-    initExportButtons();
-}
+  if (btnPDF) btnPDF.addEventListener("click", e => {
+    e.preventDefault();
+    hfhExportPDF();
+  });
 
-// Vérification
-setTimeout(function() {
-    if (typeof window.hfhExportPDF === 'function' && typeof window.hfhExportDOCX === 'function') {
-        console.log('✓✓✓ Système HFH opérationnel ✓✓✓');
-    } else {
-        console.error('✗ Erreur: fonctions d\'export non disponibles');
-    }
-}, 200);
+  if (btnDOCX) btnDOCX.addEventListener("click", e => {
+    e.preventDefault();
+    hfhExportDOCX();
+  });
+});
+
