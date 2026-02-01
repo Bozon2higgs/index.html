@@ -13,100 +13,170 @@
     <img src="assets/logo_hfh.png" alt="HFH" class="logo" />
     <div>
       <h1 class="brand-title">HFH</h1>
-      <p class="brand-subtitle">Human for Human</p>
+      <p class="brand-subtitle">Human for Human • Local-first • Sans collecte</p>
     </div>
   </div>
 </header>
 
 <main class="container">
-  <section class="card">
-    <h2 data-i18n="title">Générateur HFH</h2>
 
-    <label for="langSelect">Langue / Language</label>
-    <select id="langSelect">
-      <option value="fr" selected>Français</option>
-      <option value="en">English</option>
-    </select>
+<!-- ===================== FORMULAIRE ===================== -->
 
-    <p class="muted">
-      Le document est généré localement sur votre appareil.  
-      Aucune donnée n’est transmise.
-    </p>
+<section class="card">
+  <h2>Générateur HFH</h2>
 
-    <hr />
+  <label for="langSelect">Langue</label>
+  <select id="langSelect">
+    <option value="fr" selected>Français</option>
+    <option value="en">English</option>
+  </select>
 
-    <div class="grid">
-      <div>
-        <label for="identityMode">Identité</label>
-        <select id="identityMode">
-          <option value="identified" selected>Identifié</option>
-          <option value="anonymous">Anonyme</option>
-        </select>
-      </div>
+  <p class="muted">
+    Le document est généré localement sur votre appareil.  
+    Aucune donnée n’est envoyée ni stockée.
+  </p>
 
-      <div>
-        <label for="fullName">Nom / Prénom</label>
-        <input id="fullName" type="text" placeholder="Ex : Nom Prénom" />
-      </div>
+  <hr />
 
-      <div>
-        <label for="country">Pays / Territoire concerné</label>
-        <input id="country" type="text" placeholder="Ex : France" />
-      </div>
-
-      <div>
-        <label for="dateStart">Date début</label>
-        <input id="dateStart" type="date" />
-      </div>
-
-      <div>
-        <label for="dateEnd">Date fin</label>
-        <input id="dateEnd" type="date" />
-      </div>
+  <div class="grid">
+    <div>
+      <label for="identityMode">Identité</label>
+      <select id="identityMode">
+        <option value="identified">Identifié</option>
+        <option value="anonymous" selected>Anonyme</option>
+      </select>
     </div>
 
-    <label for="victims">Victimes / populations affectées</label>
-    <textarea id="victims" rows="3"></textarea>
-
-    <label for="allegedAuthors">Auteurs présumés</label>
-    <textarea id="allegedAuthors" rows="3"></textarea>
-
-    <label>Violations alléguées</label>
-    <div class="checks">
-      <label><input type="checkbox" class="vio" value="Violences contre civils"> Violences contre civils</label>
-      <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
-      <label><input type="checkbox" class="vio" value="Torture"> Torture / mauvais traitements</label>
-      <label><input type="checkbox" class="vio" value="Discrimination"> Discrimination / persécution</label>
+    <div>
+      <label for="fullName">Nom / Prénom</label>
+      <input id="fullName" type="text" placeholder="Optionnel" />
     </div>
 
-    <label for="factsSummary">Exposé des faits (résumé)</label>
-    <textarea id="factsSummary" rows="6"></textarea>
-
-    <label for="factsDetailed">Faits détaillés</label>
-    <textarea id="factsDetailed" rows="8"></textarea>
-
-    <label for="evidence">Preuves / annexes</label>
-    <textarea id="evidence" rows="4"></textarea>
-
-    <label for="requests">Demandes</label>
-    <textarea id="requests" rows="4"></textarea>
-
-    <div class="actions">
-      <button id="btn-export-pdf">Exporter en PDF (ONU)</button>
-      <button id="btn-export-docx">Exporter en DOCX</button>
+    <div>
+      <label for="residence">Lieu de résidence (optionnel)</label>
+      <input id="residence" type="text" />
     </div>
 
-    <p class="muted">
-      <a href="./about.html">À propos de HFH</a>
-    </p>
-  </section>
+    <div>
+      <label for="country">Pays / Territoire concerné</label>
+      <input id="country" type="text" />
+    </div>
+
+    <div>
+      <label for="dateStart">Date début</label>
+      <input id="dateStart" type="date" />
+    </div>
+
+    <div>
+      <label for="dateEnd">Date fin</label>
+      <input id="dateEnd" type="date" />
+    </div>
+  </div>
+
+  <label for="victims">Victimes / populations affectées</label>
+  <textarea id="victims" rows="3"></textarea>
+
+  <label for="allegedAuthors">Auteurs présumés (si connus)</label>
+  <textarea id="allegedAuthors" rows="3"></textarea>
+
+  <label>Violations alléguées</label>
+  <div class="checks">
+    <label><input type="checkbox" class="vio" value="Violences contre civils"> Violences contre civils</label>
+    <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
+    <label><input type="checkbox" class="vio" value="Torture"> Torture / mauvais traitements</label>
+    <label><input type="checkbox" class="vio" value="Discrimination"> Discrimination / persécution</label>
+    <label><input type="checkbox" class="vio" value="Déplacements forcés"> Déplacements forcés</label>
+  </div>
+
+  <label for="factsSummary">Exposé des faits (résumé)</label>
+  <textarea id="factsSummary" rows="6"></textarea>
+
+  <label for="factsDetailed">Faits détaillés</label>
+  <textarea id="factsDetailed" rows="8"></textarea>
+
+  <label for="evidence">Preuves / annexes (liste)</label>
+  <textarea id="evidence" rows="4"></textarea>
+
+  <label for="requests">Demandes</label>
+  <textarea id="requests" rows="4"></textarea>
+
+  <div class="actions">
+    <button id="btn-export-pdf">Exporter en PDF</button>
+    <button id="btn-export-docx">Exporter en DOCX</button>
+  </div>
+</section>
+
+<!-- ===================== GUIDE UTILISATEUR ===================== -->
+
+<section class="card">
+  <h2>Guide utilisateur — Comment remplir ce formulaire</h2>
+
+  <p class="muted">
+    Vous n’avez pas besoin d’être juriste.  
+    Écrivez avec vos mots. Ce guide est là pour vous aider.
+  </p>
+
+  <h3>1. Identité</h3>
+  <p>
+    Choisissez <strong>Anonyme</strong> si votre sécurité l’exige.  
+    Choisissez <strong>Identifié</strong> si vous souhaitez apparaître.
+  </p>
+
+  <h3>2. Pays et dates</h3>
+  <p>
+    Indiquez le lieu des faits et les dates connues.  
+    Les estimations sont acceptables.
+  </p>
+
+  <h3>3. Victimes</h3>
+  <p>
+    Décrivez qui est affecté : civils, groupes, populations vulnérables.
+  </p>
+
+  <h3>4. Auteurs présumés</h3>
+  <p>
+    Indiquez-les si vous les connaissez. Sinon, laissez vide.
+  </p>
+
+  <h3>5. Violations</h3>
+  <p>
+    Cochez ce qui correspond le mieux, même approximativement.
+  </p>
+
+  <h3>6. Exposé des faits (résumé)</h3>
+  <p>
+    Expliquez brièvement ce qui s’est passé : quoi, où, quand.
+  </p>
+
+  <h3>7. Faits détaillés</h3>
+  <p>
+    Décrivez librement : chronologie, témoignages, conséquences humaines.
+  </p>
+
+  <h3>8. Preuves</h3>
+  <p>
+    Listez ce qui existe (photos, vidéos, articles, rapports).  
+    HFH ne téléverse rien.
+  </p>
+
+  <h3>9. Demandes</h3>
+  <p>
+    Expliquez ce que vous demandez : enquête, protection, suivi.
+  </p>
+
+  <hr />
+
+  <p class="muted">
+    HFH — Human for Human  
+    <br>
+    Tout est généré localement. Vous gardez le contrôle.
+  </p>
+</section>
+
 </main>
 
 <footer class="footer">
-  <p>
-    HFH v1.0 — Human for Human • Local-first •
-    <a href="./about.html">À propos</a>
-  </p>
+  <p>HFH v1.0 — Human for Human • Local-first • Aucun stockage</p>
 </footer>
 
 <!-- Librairies -->
@@ -115,7 +185,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <!-- Scripts -->
-<script src="js/multilingual.js"></script>
 <script src="js/pdf-docx.js"></script>
 
 </body>
