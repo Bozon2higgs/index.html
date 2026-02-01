@@ -20,10 +20,18 @@
 
 <main class="container">
 
-<!-- ===================== FORMULAIRE ===================== -->
-
+<!-- ===================== INTRO ===================== -->
 <section class="card">
-  <h2>Générateur HFH</h2>
+  <h2>Signaler des faits, humainement</h2>
+  <p class="muted">
+    HFH permet de rédiger un signalement de manière <strong>locale, confidentielle et humaine</strong>.  
+    Rien n’est envoyé automatiquement. Vous gardez le contrôle.
+  </p>
+</section>
+
+<!-- ===================== FORMULAIRE ===================== -->
+<section class="card">
+  <h2>Formulaire de signalement</h2>
 
   <label for="langSelect">Langue</label>
   <select id="langSelect">
@@ -31,55 +39,65 @@
     <option value="en">English</option>
   </select>
 
-  <p class="muted">
-    Le document est généré localement sur votre appareil.  
-    Aucune donnée n’est envoyée ni stockée.
-  </p>
-
   <hr />
+
+  <h3>1. Identité</h3>
+  <p class="muted">
+    Choisissez l’option la plus sûre pour vous.
+  </p>
 
   <div class="grid">
     <div>
-      <label for="identityMode">Identité</label>
+      <label for="identityMode">Mode d’identité</label>
       <select id="identityMode">
+        <option value="anonymous" selected>Anonyme (recommandé si risque)</option>
         <option value="identified">Identifié</option>
-        <option value="anonymous" selected>Anonyme</option>
       </select>
     </div>
 
     <div>
       <label for="fullName">Nom / Prénom</label>
       <input id="fullName" type="text" placeholder="Optionnel" />
+      <p class="muted">Laissez vide si vous choisissez l’anonymat.</p>
     </div>
 
     <div>
-      <label for="residence">Lieu de résidence (optionnel)</label>
-      <input id="residence" type="text" />
+      <label for="residence">Lieu de résidence</label>
+      <input id="residence" type="text" placeholder="Optionnel" />
     </div>
+  </div>
 
+  <h3>2. Contexte</h3>
+
+  <div class="grid">
     <div>
       <label for="country">Pays / Territoire concerné</label>
       <input id="country" type="text" />
     </div>
 
     <div>
-      <label for="dateStart">Date début</label>
+      <label for="dateStart">Date de début</label>
       <input id="dateStart" type="date" />
     </div>
 
     <div>
-      <label for="dateEnd">Date fin</label>
+      <label for="dateEnd">Date de fin</label>
       <input id="dateEnd" type="date" />
+      <p class="muted">Laissez vide si les faits sont en cours.</p>
     </div>
   </div>
 
+  <h3>3. Personnes concernées</h3>
+
   <label for="victims">Victimes / populations affectées</label>
-  <textarea id="victims" rows="3"></textarea>
+  <textarea id="victims" rows="3" placeholder="Qui est affecté ? Combien ? Situation particulière ?"></textarea>
 
   <label for="allegedAuthors">Auteurs présumés (si connus)</label>
-  <textarea id="allegedAuthors" rows="3"></textarea>
+  <textarea id="allegedAuthors" rows="3" placeholder="Institutions, groupes, autorités…"></textarea>
 
-  <label>Violations alléguées</label>
+  <h3>4. Violations</h3>
+  <p class="muted">Cochez ce qui correspond le mieux, même approximativement.</p>
+
   <div class="checks">
     <label><input type="checkbox" class="vio" value="Violences contre civils"> Violences contre civils</label>
     <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
@@ -88,88 +106,48 @@
     <label><input type="checkbox" class="vio" value="Déplacements forcés"> Déplacements forcés</label>
   </div>
 
-  <label for="factsSummary">Exposé des faits (résumé)</label>
-  <textarea id="factsSummary" rows="6"></textarea>
+  <h3>5. Faits</h3>
+
+  <label for="factsSummary">Exposé des faits — résumé</label>
+  <textarea id="factsSummary" rows="5" placeholder="Que s’est-il passé ? Où ? Quand ?"></textarea>
 
   <label for="factsDetailed">Faits détaillés</label>
-  <textarea id="factsDetailed" rows="8"></textarea>
+  <textarea id="factsDetailed" rows="8" placeholder="Chronologie, témoignages, conséquences humaines…"></textarea>
+
+  <h3>6. Compléments</h3>
 
   <label for="evidence">Preuves / annexes (liste)</label>
-  <textarea id="evidence" rows="4"></textarea>
+  <textarea id="evidence" rows="4" placeholder="Photos, vidéos, articles, rapports…"></textarea>
 
   <label for="requests">Demandes</label>
-  <textarea id="requests" rows="4"></textarea>
+  <textarea id="requests" rows="4" placeholder="Enquête, protection, suivi, communication urgente…"></textarea>
 
   <div class="actions">
-    <button id="btn-export-pdf">Exporter en PDF</button>
-    <button id="btn-export-docx">Exporter en DOCX</button>
+    <button id="btn-export-pdf">📄 Exporter en PDF</button>
+    <button id="btn-export-docx">📝 Exporter en DOCX</button>
   </div>
+
+  <p class="muted">
+    Les documents sont générés localement sur votre appareil.
+  </p>
 </section>
 
-<!-- ===================== GUIDE UTILISATEUR ===================== -->
-
+<!-- ===================== GUIDE ===================== -->
 <section class="card">
-  <h2>Guide utilisateur — Comment remplir ce formulaire</h2>
+  <h2>Guide rapide</h2>
+  <p class="muted">
+    Vous n’avez pas besoin d’être juriste. Écrire avec vos mots est suffisant.
+  </p>
+
+  <ul>
+    <li><strong>Soyez factuel</strong> : qui, quoi, où, quand.</li>
+    <li><strong>Restez simple</strong> : pas besoin de termes juridiques.</li>
+    <li><strong>Votre sécurité passe avant tout</strong>.</li>
+  </ul>
 
   <p class="muted">
-    Vous n’avez pas besoin d’être juriste.  
-    Écrivez avec vos mots. Ce guide est là pour vous aider.
-  </p>
-
-  <h3>1. Identité</h3>
-  <p>
-    Choisissez <strong>Anonyme</strong> si votre sécurité l’exige.  
-    Choisissez <strong>Identifié</strong> si vous souhaitez apparaître.
-  </p>
-
-  <h3>2. Pays et dates</h3>
-  <p>
-    Indiquez le lieu des faits et les dates connues.  
-    Les estimations sont acceptables.
-  </p>
-
-  <h3>3. Victimes</h3>
-  <p>
-    Décrivez qui est affecté : civils, groupes, populations vulnérables.
-  </p>
-
-  <h3>4. Auteurs présumés</h3>
-  <p>
-    Indiquez-les si vous les connaissez. Sinon, laissez vide.
-  </p>
-
-  <h3>5. Violations</h3>
-  <p>
-    Cochez ce qui correspond le mieux, même approximativement.
-  </p>
-
-  <h3>6. Exposé des faits (résumé)</h3>
-  <p>
-    Expliquez brièvement ce qui s’est passé : quoi, où, quand.
-  </p>
-
-  <h3>7. Faits détaillés</h3>
-  <p>
-    Décrivez librement : chronologie, témoignages, conséquences humaines.
-  </p>
-
-  <h3>8. Preuves</h3>
-  <p>
-    Listez ce qui existe (photos, vidéos, articles, rapports).  
-    HFH ne téléverse rien.
-  </p>
-
-  <h3>9. Demandes</h3>
-  <p>
-    Expliquez ce que vous demandez : enquête, protection, suivi.
-  </p>
-
-  <hr />
-
-  <p class="muted">
-    HFH — Human for Human  
-    <br>
-    Tout est généré localement. Vous gardez le contrôle.
+    HFH — Human for Human.  
+    Un outil pour transformer un témoignage en document structuré.
   </p>
 </section>
 
