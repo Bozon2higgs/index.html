@@ -21,32 +21,34 @@ body {
 /* HEADER */
 .site-header {
   background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
-  padding: 24px;
+  padding: 28px 16px;
 }
 
-.brand {
-  max-width: 980px;
+.header-inner {
+  max-width: 1000px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .logo {
-  height: 64px;
+  height: 72px;
   width: auto;
+  flex-shrink: 0;
 }
 
-.brand-text h1 {
+.header-text h1 {
   margin: 0;
-  color: #fff;
-  font-size: 1.6rem;
+  color: #ffffff;
+  font-size: 1.7rem;
 }
 
-.tagline {
-  margin: 4px 0 0;
-  color: #e0e6ee;
+.header-text p {
+  margin: 6px 0 0;
+  color: #dbe3ee;
   font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 /* MAIN */
@@ -108,3 +110,4 @@ button + button {
 button:hover {
   opacity: 0.9;
 }
+
