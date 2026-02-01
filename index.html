@@ -13,57 +13,50 @@
     <img src="assets/logo_hfh.png" alt="HFH" class="logo" />
     <div>
       <h1 class="brand-title">HFH</h1>
-      <p class="brand-subtitle">Human for Human • Local-first • Sans collecte</p>
+      <p class="brand-subtitle">Human for Human • Local-first • No data collection</p>
     </div>
   </div>
 </header>
 
 <main class="container">
 
-<!-- ===================== INTRO ===================== -->
+<!-- ================================================= -->
+<!-- INTRO -->
+<!-- ================================================= -->
 <section class="card">
-  <h2>Signaler des faits, humainement</h2>
+  <h2>Human For Human — Signalement local et confidentiel</h2>
   <p class="muted">
-    HFH permet de rédiger un signalement de manière <strong>locale, confidentielle et humaine</strong>.  
-    Rien n’est envoyé automatiquement. Vous gardez le contrôle.
+    HFH permet de rédiger un signalement de violations des droits humains  
+    <strong>sans serveur, sans compte, sans transmission automatique</strong>.
   </p>
 </section>
 
-<!-- ===================== FORMULAIRE ===================== -->
+<!-- ================================================= -->
+<!-- FORMULAIRE (LANGUAGE-NEUTRAL) -->
+<!-- ================================================= -->
 <section class="card">
   <h2>Formulaire de signalement</h2>
 
-  <label for="langSelect">Langue</label>
-  <select id="langSelect">
-    <option value="fr" selected>Français</option>
-    <option value="en">English</option>
-  </select>
-
-  <hr />
-
   <h3>1. Identité</h3>
-  <p class="muted">
-    Choisissez l’option la plus sûre pour vous.
-  </p>
+  <p class="muted">Choisissez l’option la plus sûre pour vous.</p>
 
   <div class="grid">
     <div>
       <label for="identityMode">Mode d’identité</label>
       <select id="identityMode">
-        <option value="anonymous" selected>Anonyme (recommandé si risque)</option>
-        <option value="identified">Identifié</option>
+        <option value="anonymous" selected>Anonyme / Anonymous</option>
+        <option value="identified">Identifié / Identified</option>
       </select>
     </div>
 
     <div>
-      <label for="fullName">Nom / Prénom</label>
-      <input id="fullName" type="text" placeholder="Optionnel" />
-      <p class="muted">Laissez vide si vous choisissez l’anonymat.</p>
+      <label for="fullName">Nom / Name</label>
+      <input id="fullName" type="text" placeholder="Optional" />
     </div>
 
     <div>
-      <label for="residence">Lieu de résidence</label>
-      <input id="residence" type="text" placeholder="Optionnel" />
+      <label for="residence">Lieu de résidence / Residence</label>
+      <input id="residence" type="text" placeholder="Optional" />
     </div>
   </div>
 
@@ -71,93 +64,101 @@
 
   <div class="grid">
     <div>
-      <label for="country">Pays / Territoire concerné</label>
+      <label for="country">Pays / Country</label>
       <input id="country" type="text" />
     </div>
 
     <div>
-      <label for="dateStart">Date de début</label>
+      <label for="dateStart">Date début / Start date</label>
       <input id="dateStart" type="date" />
     </div>
 
     <div>
-      <label for="dateEnd">Date de fin</label>
+      <label for="dateEnd">Date fin / End date</label>
       <input id="dateEnd" type="date" />
-      <p class="muted">Laissez vide si les faits sont en cours.</p>
+      <p class="muted">Leave empty if ongoing.</p>
     </div>
   </div>
 
   <h3>3. Personnes concernées</h3>
 
-  <label for="victims">Victimes / populations affectées</label>
-  <textarea id="victims" rows="3" placeholder="Qui est affecté ? Combien ? Situation particulière ?"></textarea>
+  <label for="victims">Victimes / Affected populations</label>
+  <textarea id="victims" rows="3"></textarea>
 
-  <label for="allegedAuthors">Auteurs présumés (si connus)</label>
-  <textarea id="allegedAuthors" rows="3" placeholder="Institutions, groupes, autorités…"></textarea>
+  <label for="allegedAuthors">Auteurs présumés / Alleged perpetrators</label>
+  <textarea id="allegedAuthors" rows="3"></textarea>
 
   <h3>4. Violations</h3>
-  <p class="muted">Cochez ce qui correspond le mieux, même approximativement.</p>
-
   <div class="checks">
-    <label><input type="checkbox" class="vio" value="Violences contre civils"> Violences contre civils</label>
-    <label><input type="checkbox" class="vio" value="Détention arbitraire"> Détention arbitraire</label>
-    <label><input type="checkbox" class="vio" value="Torture"> Torture / mauvais traitements</label>
-    <label><input type="checkbox" class="vio" value="Discrimination"> Discrimination / persécution</label>
-    <label><input type="checkbox" class="vio" value="Déplacements forcés"> Déplacements forcés</label>
+    <label><input type="checkbox" class="vio" value="Violence against civilians"> Violence against civilians</label>
+    <label><input type="checkbox" class="vio" value="Arbitrary detention"> Arbitrary detention</label>
+    <label><input type="checkbox" class="vio" value="Torture or ill-treatment"> Torture / ill-treatment</label>
+    <label><input type="checkbox" class="vio" value="Discrimination or persecution"> Discrimination / persecution</label>
+    <label><input type="checkbox" class="vio" value="Forced displacement"> Forced displacement</label>
   </div>
 
-  <h3>5. Faits</h3>
+  <h3>5. Facts</h3>
 
-  <label for="factsSummary">Exposé des faits — résumé</label>
-  <textarea id="factsSummary" rows="5" placeholder="Que s’est-il passé ? Où ? Quand ?"></textarea>
+  <label for="factsSummary">Facts summary</label>
+  <textarea id="factsSummary" rows="5" placeholder="What happened? Where? When?"></textarea>
 
-  <label for="factsDetailed">Faits détaillés</label>
-  <textarea id="factsDetailed" rows="8" placeholder="Chronologie, témoignages, conséquences humaines…"></textarea>
+  <label for="factsDetailed">Detailed facts</label>
+  <textarea id="factsDetailed" rows="8" placeholder="Chronology, testimonies, human impact…"></textarea>
 
-  <h3>6. Compléments</h3>
+  <h3>6. Supporting information</h3>
 
-  <label for="evidence">Preuves / annexes (liste)</label>
-  <textarea id="evidence" rows="4" placeholder="Photos, vidéos, articles, rapports…"></textarea>
+  <label for="evidence">Evidence / annexes (list)</label>
+  <textarea id="evidence" rows="4"></textarea>
 
-  <label for="requests">Demandes</label>
-  <textarea id="requests" rows="4" placeholder="Enquête, protection, suivi, communication urgente…"></textarea>
+  <label for="requests">Requests</label>
+  <textarea id="requests" rows="4"></textarea>
 
   <div class="actions">
-    <button id="btn-export-pdf">📄 Exporter en PDF</button>
-    <button id="btn-export-docx">📝 Exporter en DOCX</button>
+    <button id="btn-export-pdf">📄 Export PDF</button>
+    <button id="btn-export-docx">📝 Export DOCX</button>
   </div>
 
   <p class="muted">
-    Les documents sont générés localement sur votre appareil.
+    Everything is generated locally on your device.
   </p>
 </section>
 
-<!-- ===================== GUIDE ===================== -->
+<!-- ================================================= -->
+<!-- GUIDE FR -->
+<!-- ================================================= -->
 <section class="card">
-  <h2>Guide rapide</h2>
-  <p class="muted">
-    Vous n’avez pas besoin d’être juriste. Écrire avec vos mots est suffisant.
-  </p>
-
+  <h2>Guide rapide — Français</h2>
   <ul>
-    <li><strong>Soyez factuel</strong> : qui, quoi, où, quand.</li>
-    <li><strong>Restez simple</strong> : pas besoin de termes juridiques.</li>
-    <li><strong>Votre sécurité passe avant tout</strong>.</li>
+    <li>Soyez factuel : qui, quoi, où, quand.</li>
+    <li>Utilisez vos mots, pas de jargon juridique requis.</li>
+    <li>Votre sécurité passe avant tout.</li>
+  </ul>
+</section>
+
+<!-- ================================================= -->
+<!-- GUIDE EN -->
+<!-- ================================================= -->
+<section class="card">
+  <h2>Quick guide — English</h2>
+  <ul>
+    <li>Be factual: who, what, where, when.</li>
+    <li>Use your own words — no legal expertise required.</li>
+    <li>Your safety comes first.</li>
   </ul>
 
   <p class="muted">
-    HFH — Human for Human.  
-    Un outil pour transformer un témoignage en document structuré.
+    HFH (Human For Human) is a local-first tool designed to help structure
+    human rights reports without collecting or transmitting data.
   </p>
 </section>
 
 </main>
 
 <footer class="footer">
-  <p>HFH v1.0 — Human for Human • Local-first • Aucun stockage</p>
+  <p>HFH v1.0 — Human for Human • Local-first • No storage • No tracking</p>
 </footer>
 
-<!-- Librairies -->
+<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
