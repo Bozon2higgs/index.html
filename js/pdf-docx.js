@@ -2,13 +2,12 @@
 // HFH - Export PDF/DOCX - Version corrigée pour IDs exacts
 // ============================================================================
 
-console.log('✓ pdf-docx.js chargé');
 
 // ============================================================================
 // FONCTION EXPORT PDF
 // ============================================================================
 function hfhExportPDF() {
-    console.log('→ hfhExportPDF appelé');
+   
     
     try {
         // Vérifier jsPDF
