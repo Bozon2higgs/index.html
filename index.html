@@ -10,6 +10,13 @@
         content="HFH — Outil local et indépendant pour structurer des faits liés aux violations des droits humains.">
 
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- ===============================
+       Librairies locales (OBLIGATOIRES)
+  ================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 
 <body>
@@ -19,7 +26,20 @@
 ================================================== -->
 <header class="site-header">
   <div class="brand">
-    <span class="logo-text">HFH</span>
+    <img
+      src="assets/logo-hfh.png"
+      alt="HFH – Human For Human"
+      class="logo"
+    >
+
+    <div class="brand-text">
+      <h1>Human For Human</h1>
+      <p class="tagline">
+        Outil local et indépendant pour structurer des faits liés
+        aux violations des droits humains.<br>
+        Aucune donnée n’est stockée ou transmise.
+      </p>
+    </div>
   </div>
 </header>
 
@@ -28,94 +48,42 @@
 ================================================== -->
 <main>
 
-  <!-- ===============================
-       INTRODUCTION
-  ================================ -->
   <section class="card">
-
-    <h1>Human For Human</h1>
-
-    <p class="helper-text">
-      Outil local et indépendant pour structurer des faits liés aux violations
-      des droits humains.
-      <br>
-      Aucune donnée n’est stockée, transmise ou collectée.
-    </p>
-
-    <!-- Sélecteur de langue -->
-    <div class="language-selector">
-      <button data-lang="fr">🇫🇷 FR</button>
-      <button data-lang="en">🇬🇧 EN</button>
-      <button data-lang="es">🇪🇸 ES</button>
-      <button data-lang="ru">🇷🇺 RU</button>
-      <button data-lang="ar">🇸🇦 AR</button>
-      <button data-lang="zh">🇨🇳 中文</button>
-      <button data-lang="uk">🇺🇦 UK</button>
-    </div>
-
-  </section>
-
-  <!-- ===============================
-       FORMULAIRE HFH
-  ================================ -->
-  <section class="card">
-
     <h2>Structuration des faits</h2>
 
-    <!-- Identité -->
     <label for="identity">Identité</label>
     <select id="identity">
-      <option value="anonymous">Anonyme</option>
-      <option value="identified">Identifié</option>
+      <option value="Anonyme">Anonyme</option>
+      <option value="Identifié">Identifié</option>
     </select>
-    <small>Choisissez l’option la plus adaptée à votre situation.</small>
 
     <label for="fullname">Nom / Prénom</label>
-    <input id="fullname" type="text" placeholder="Optionnel">
+    <input id="fullname" type="text">
 
     <label for="country">Pays / Territoire</label>
     <input id="country" type="text">
 
     <label for="victims">Victimes / populations affectées</label>
-    <textarea id="victims"
-              placeholder="Qui est affecté ? Combien de personnes ?"></textarea>
+    <textarea id="victims"></textarea>
 
     <label for="factsSummary">Résumé des faits</label>
-    <textarea id="factsSummary"
-              placeholder="Résumé court et factuel"></textarea>
+    <textarea id="factsSummary"></textarea>
 
     <label for="factsDetailed">Description détaillée des faits</label>
-    <textarea id="factsDetailed"
-              placeholder="Décrivez les faits de manière détaillée"></textarea>
-
+    <textarea id="factsDetailed"></textarea>
   </section>
 
-  <!-- ===============================
-       EXPORT
-  ================================ -->
   <section class="card">
-
     <h2>Export local</h2>
 
-    <p class="helper-text">
-      Les documents sont générés localement sur votre appareil.
-      HFH ne transmet aucune information.
-    </p>
-
-    <button id="exportPDF" class="primary-btn">
-      Exporter en PDF
-    </button>
-
-    <button id="exportDOCX" class="secondary-btn">
-      Exporter en DOCX
-    </button>
-
+    <button id="exportPDF" class="primary-btn">Exporter en PDF</button>
+    <button id="exportDOCX" class="secondary-btn">Exporter en DOCX</button>
   </section>
 
 </main>
 
 <!-- ==================================================
-     SCRIPTS
+     SCRIPT HFH
 ================================================== -->
 <script src="js/pdf-docx.js"></script>
 
