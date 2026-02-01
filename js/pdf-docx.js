@@ -1,11 +1,11 @@
 // ============================================================================
 // HFH — Export PDF / DOCX
-// Étape 3.2 — Numérotation juridique fine (ONU)
+// Étape 3.3 — Multilingue réel (contenu généré)
 // Local-first • Sans collecte de données
 // ============================================================================
 
 /**
- * Vérification douce des bibliothèques (console uniquement)
+ * Vérification douce des bibliothèques
  */
 (function checkLibs() {
   if (!window.jspdf) console.error("HFH: jsPDF manquant");
@@ -14,16 +14,80 @@
 })();
 
 // ============================================================================
+// I18N — textes générés (ONU-style)
+// ============================================================================
+const HFH_I18N = {
+  fr: {
+    title: "SIGNALEMENT HFH",
+    subtitle: "Document généré localement — Confidentiel",
+    identity: "IDENTIFICATION DU SIGNALEMENT",
+    identity_named: name => `1.1 Identité déclarée : ${name}`,
+    identity_anon: "1.1 Identité déclarée : Anonyme",
+    generated: "1.2 Date de génération du document",
+    affected: "2. PERSONNES OU POPULATIONS AFFECTÉES",
+    context: "3. CONTEXTE GÉOGRAPHIQUE ET TEMPOREL",
+    country: c => `3.1 Pays / territoire : ${c}`,
+    start: d => `3.2 Date de début : ${d}`,
+    end: d => `3.3 Date de fin : ${d}`,
+    ongoing: "3.3 Date de fin : en cours",
+    authors: "4. AUTEURS PRÉSUMÉS",
+    violations: "5. VIOLATIONS ALLÉGUÉES",
+    facts_summary: "6.1 Résumé des faits",
+    facts_detailed: "6.2 Faits détaillés",
+    evidence: "7. ÉLÉMENTS DE PREUVE DISPONIBLES",
+    requests: "8. DEMANDES ADRESSÉES AUX MÉCANISMES INTERNATIONAUX",
+    clause_title: "9. CLAUSE FINALE",
+    clause_text:
+      "Ce document a été généré localement. Aucune donnée n’a été transmise ni stockée.",
+    footer: (i, t) => `HFH — Page ${i}/${t}`
+  },
+
+  en: {
+    title: "HFH COMMUNICATION",
+    subtitle: "Document generated locally — Confidential",
+    identity: "IDENTIFICATION OF THE COMMUNICATION",
+    identity_named: name => `1.1 Declared identity: ${name}`,
+    identity_anon: "1.1 Declared identity: Anonymous",
+    generated: "1.2 Document generation date",
+    affected: "2. AFFECTED PERSONS OR POPULATIONS",
+    context: "3. GEOGRAPHICAL AND TEMPORAL CONTEXT",
+    country: c => `3.1 Country / territory: ${c}`,
+    start: d => `3.2 Start date: ${d}`,
+    end: d => `3.3 End date: ${d}`,
+    ongoing: "3.3 End date: ongoing",
+    authors: "4. ALLEGED PERPETRATORS",
+    violations: "5. ALLEGED VIOLATIONS",
+    facts_summary: "6.1 Summary of facts",
+    facts_detailed: "6.2 Detailed facts",
+    evidence: "7. AVAILABLE EVIDENCE",
+    requests: "8. REQUESTS TO INTERNATIONAL MECHANISMS",
+    clause_title: "9. FINAL CLAUSE",
+    clause_text:
+      "This document was generated locally. No data was transmitted or stored.",
+    footer: (i, t) => `HFH — Page ${i}/${t}`
+  }
+};
+
+// ============================================================================
 // UTILITAIRES
 // ============================================================================
+function getLang() {
+  return document.getElementById("langSelect")?.value || "fr";
+}
+
+function t() {
+  const lang = getLang();
+  return HFH_I18N[lang] || HFH_I18N.fr;
+}
+
 function getValue(id) {
   return document.getElementById(id)?.value?.trim() || "";
 }
 
 function getViolations() {
-  const list = [];
-  document.querySelectorAll(".vio:checked").forEach(cb => list.push(cb.value));
-  return list;
+  const v = [];
+  document.querySelectorAll(".vio:checked").forEach(cb => v.push(cb.value));
+  return v;
 }
 
 // ============================================================================
@@ -33,8 +97,8 @@ function hfhExportPDF() {
   try {
     if (!window.jspdf) return;
     const { jsPDF } = window.jspdf;
+    const TXT = t();
 
-    // Données formulaire
     const identityMode = getValue("identityMode") || "anonymous";
     const fullName = getValue("fullName");
     const country = getValue("country");
@@ -48,7 +112,6 @@ function hfhExportPDF() {
     const requests = getValue("requests");
     const violations = getViolations();
 
-    // PDF setup
     const doc = new jsPDF();
     let y = 20;
     const margin = 20;
@@ -57,12 +120,10 @@ function hfhExportPDF() {
 
     function addSection(title, content) {
       if (!content) return;
-
       if (y > 270) {
         doc.addPage();
         y = 20;
       }
-
       doc.setFontSize(12).setFont(undefined, "bold");
       doc.text(title, margin, y);
       y += lh;
@@ -77,87 +138,51 @@ function hfhExportPDF() {
         doc.text(line, margin, y);
         y += lh;
       });
-
       y += lh;
     }
 
-    // En-tête
+    // Header
     doc.setFontSize(18).setFont(undefined, "bold");
-    doc.text("SIGNALEMENT HFH", margin, y);
+    doc.text(TXT.title, margin, y);
     y += lh * 2;
 
     doc.setFontSize(10).setFont(undefined, "normal");
-    doc.text("Document généré localement — Confidentiel", margin, y);
+    doc.text(TXT.subtitle, margin, y);
     y += lh * 2;
 
-    // ===============================
-    // STRUCTURE JURIDIQUE ONU — PDF
-    // ===============================
+    // Sections
     addSection(
-      "1. IDENTIFICATION DU SIGNALEMENT",
+      TXT.identity,
       identityMode === "identified" && fullName
-        ? `1.1 Identité déclarée : ${fullName}`
-        : "1.1 Identité déclarée : Anonyme"
+        ? TXT.identity_named(fullName)
+        : TXT.identity_anon
     );
 
-    addSection(
-      "1.2 Date de génération du document",
-      new Date().toLocaleDateString()
-    );
+    addSection(TXT.generated, new Date().toLocaleDateString());
+
+    addSection(TXT.affected, victims);
 
     addSection(
-      "2. PERSONNES OU POPULATIONS AFFECTÉES",
-      victims
-    );
-
-    addSection(
-      "3. CONTEXTE GÉOGRAPHIQUE ET TEMPOREL",
+      TXT.context,
       [
-        country ? `3.1 Pays / territoire : ${country}` : "",
-        dateStart ? `3.2 Date de début : ${dateStart}` : "",
-        dateEnd ? `3.3 Date de fin : ${dateEnd}` : "3.3 Date de fin : en cours"
+        country ? TXT.country(country) : "",
+        dateStart ? TXT.start(dateStart) : "",
+        dateEnd ? TXT.end(dateEnd) : TXT.ongoing
       ].filter(Boolean).join("\n")
     );
 
-    addSection(
-      "4. AUTEURS PRÉSUMÉS",
-      allegedAuthors
-    );
+    addSection(TXT.authors, allegedAuthors);
 
     addSection(
-      "5. VIOLATIONS ALLÉGUÉES",
+      TXT.violations,
       violations.length ? "• " + violations.join("\n• ") : ""
     );
 
-    addSection(
-      "6. EXPOSÉ DES FAITS",
-      ""
-    );
-
-    addSection(
-      "6.1 Résumé des faits",
-      factsSummary
-    );
-
-    addSection(
-      "6.2 Faits détaillés",
-      factsDetailed
-    );
-
-    addSection(
-      "7. ÉLÉMENTS DE PREUVE DISPONIBLES",
-      evidence
-    );
-
-    addSection(
-      "8. DEMANDES ADRESSÉES AUX MÉCANISMES INTERNATIONAUX",
-      requests
-    );
-
-    addSection(
-      "9. CLAUSE FINALE",
-      "Ce document a été généré localement. Aucune donnée n’a été transmise ni stockée."
-    );
+    addSection(TXT.facts_summary, factsSummary);
+    addSection(TXT.facts_detailed, factsDetailed);
+    addSection(TXT.evidence, evidence);
+    addSection(TXT.requests, requests);
+    addSection(TXT.clause_title, TXT.clause_text);
 
     // Footer
     const pageCount = doc.internal.getNumberOfPages();
@@ -165,13 +190,13 @@ function hfhExportPDF() {
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.text(
-        `HFH — Page ${i}/${pageCount} — ${new Date().toLocaleDateString()}`,
+        TXT.footer(i, pageCount),
         margin,
         doc.internal.pageSize.getHeight() - 10
       );
     }
 
-    doc.save(`HFH_signalement_${Date.now()}.pdf`);
+    doc.save(`HFH_signalement_${getLang()}_${Date.now()}.pdf`);
   } catch (e) {
     console.error("HFH PDF:", e);
   }
@@ -183,7 +208,7 @@ function hfhExportPDF() {
 function hfhExportDOCX() {
   try {
     if (typeof docx === "undefined" || typeof saveAs !== "function") return;
-
+    const TXT = t();
     const { Document, Paragraph, HeadingLevel, AlignmentType, Packer } = docx;
 
     const identityMode = getValue("identityMode") || "anonymous";
@@ -210,91 +235,56 @@ function hfhExportDOCX() {
       );
     }
 
-    // En-tête
     sections.push(
       new Paragraph({
-        text: "SIGNALEMENT HFH",
+        text: TXT.title,
         heading: HeadingLevel.TITLE,
         alignment: AlignmentType.CENTER
       }),
       new Paragraph({
-        text: "Document généré localement — Confidentiel",
+        text: TXT.subtitle,
         alignment: AlignmentType.CENTER,
         italics: true
       }),
       new Paragraph({ text: "" })
     );
 
-    // ===============================
-    // STRUCTURE JURIDIQUE ONU — DOCX
-    // ===============================
     addSection(
-      "1. IDENTIFICATION DU SIGNALEMENT",
+      TXT.identity,
       identityMode === "identified" && fullName
-        ? `1.1 Identité déclarée : ${fullName}`
-        : "1.1 Identité déclarée : Anonyme"
+        ? TXT.identity_named(fullName)
+        : TXT.identity_anon
     );
 
-    addSection(
-      "1.2 Date de génération du document",
-      new Date().toLocaleDateString()
-    );
+    addSection(TXT.generated, new Date().toLocaleDateString());
+    addSection(TXT.affected, victims);
 
     addSection(
-      "2. PERSONNES OU POPULATIONS AFFECTÉES",
-      victims
-    );
-
-    addSection(
-      "3. CONTEXTE GÉOGRAPHIQUE ET TEMPOREL",
+      TXT.context,
       [
-        country ? `3.1 Pays / territoire : ${country}` : "",
-        dateStart ? `3.2 Date de début : ${dateStart}` : "",
-        dateEnd ? `3.3 Date de fin : ${dateEnd}` : "3.3 Date de fin : en cours"
+        country ? TXT.country(country) : "",
+        dateStart ? TXT.start(dateStart) : "",
+        dateEnd ? TXT.end(dateEnd) : TXT.ongoing
       ].filter(Boolean).join("\n")
     );
 
+    addSection(TXT.authors, allegedAuthors);
     addSection(
-      "4. AUTEURS PRÉSUMÉS",
-      allegedAuthors
-    );
-
-    addSection(
-      "5. VIOLATIONS ALLÉGUÉES",
+      TXT.violations,
       violations.length ? "• " + violations.join("\n• ") : ""
     );
-
-    addSection(
-      "6.1 Résumé des faits",
-      factsSummary
-    );
-
-    addSection(
-      "6.2 Faits détaillés",
-      factsDetailed
-    );
-
-    addSection(
-      "7. ÉLÉMENTS DE PREUVE DISPONIBLES",
-      evidence
-    );
-
-    addSection(
-      "8. DEMANDES ADRESSÉES AUX MÉCANISMES INTERNATIONAUX",
-      requests
-    );
-
-    addSection(
-      "9. CLAUSE FINALE",
-      "Ce document a été généré localement. Aucune donnée n’a été transmise ni stockée."
-    );
+    addSection(TXT.facts_summary, factsSummary);
+    addSection(TXT.facts_detailed, factsDetailed);
+    addSection(TXT.evidence, evidence);
+    addSection(TXT.requests, requests);
+    addSection(TXT.clause_title, TXT.clause_text);
 
     const doc = new Document({
       sections: [{ children: sections }]
     });
 
     Packer.toBlob(doc).then(blob => {
-      saveAs(blob, `HFH_signalement_${Date.now()}.docx`);
+      saveAs(blob, `HFH_signalement_${getLang()}_${Date.now()}.docx`);
     });
   } catch (e) {
     console.error("HFH DOCX:", e);
