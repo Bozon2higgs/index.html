@@ -1,0 +1,56 @@
+# HFH — Human For Human
+
+HFH (Human For Human) est un outil simple, sûr et local-first permettant de structurer des faits liés à des violations des droits humains, sans collecte de données, sans serveur et sans transmission automatique.
+
+HFH est un outil.  
+Ce n’est ni une plateforme, ni une organisation, ni une autorité.
+
+---
+
+## Choisir une langue / Choose a language
+
+- 🇫🇷 [Français](README.fr.md)
+- 🇬🇧 [English](README.en.md)
+- 🇪🇸 [Español](README.es.md)
+- 🇷🇺 [Русский](README.ru.md)
+- 🇸🇦 [العربية](README.ar.md)
+- 🇨🇳 [中文](README.zh.md)
+- 🇺🇦 [Українська](README.uk.md)
+
+---
+
+## Principes fondamentaux
+
+- aucune collecte de données  
+- aucun stockage  
+- aucune transmission  
+- aucun backend  
+- aucun compte utilisateur  
+- aucun cookie ni analytics  
+
+Tout fonctionne localement, dans le navigateur.
+
+---
+
+## Usage responsable (résumé)
+
+HFH aide à structurer des faits.  
+Il ne fournit aucune protection juridique, technique ou opérationnelle.
+
+Les documents générés restent sous la responsabilité exclusive de l’utilisateur.
+
+---
+
+## État du projet
+
+HFH est stable, fonctionnel et prêt pour une version 1.0.
+
+Le projet peut être diffusé, gelé ou étendu progressivement, sans urgence.
+
+---
+
+## Encadré légal minimal
+
+HFH est un outil d’aide à la structuration de faits.  
+Il ne collecte, ne stocke et ne transmet aucune donnée.  
+Aucune garantie n’est fournie concernant l’usage ou la sécurité des documents exportés.
