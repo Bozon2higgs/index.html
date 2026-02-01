@@ -20,150 +20,143 @@
 
 <main class="container">
 
-<!-- ================================================= -->
-<!-- INTRO -->
-<!-- ================================================= -->
+<!-- ===================== INTRO ===================== -->
 <section class="card">
-  <h2>Human For Human — Signalement local et confidentiel</h2>
+  <h2>HFH — Human For Human</h2>
   <p class="muted">
-    HFH permet de rédiger un signalement de violations des droits humains  
+    HFH permet de rédiger un signalement de violations des droits humains
     <strong>sans serveur, sans compte, sans transmission automatique</strong>.
   </p>
 </section>
 
-<!-- ================================================= -->
-<!-- FORMULAIRE (LANGUAGE-NEUTRAL) -->
-<!-- ================================================= -->
+<!-- ===================== FORMULAIRE ===================== -->
 <section class="card">
   <h2>Formulaire de signalement</h2>
 
-  <h3>1. Identité</h3>
-  <p class="muted">Choisissez l’option la plus sûre pour vous.</p>
-
   <div class="grid">
     <div>
-      <label for="identityMode">Mode d’identité</label>
+      <label for="identityMode">Identité</label>
       <select id="identityMode">
-        <option value="anonymous" selected>Anonyme / Anonymous</option>
-        <option value="identified">Identifié / Identified</option>
+        <option value="anonymous" selected>Anonyme</option>
+        <option value="identified">Identifié</option>
       </select>
     </div>
 
     <div>
       <label for="fullName">Nom / Name</label>
-      <input id="fullName" type="text" placeholder="Optional" />
+      <input id="fullName" type="text" />
     </div>
 
     <div>
-      <label for="residence">Lieu de résidence / Residence</label>
-      <input id="residence" type="text" placeholder="Optional" />
+      <label for="residence">Lieu de résidence</label>
+      <input id="residence" type="text" />
     </div>
-  </div>
 
-  <h3>2. Contexte</h3>
-
-  <div class="grid">
     <div>
       <label for="country">Pays / Country</label>
       <input id="country" type="text" />
     </div>
 
     <div>
-      <label for="dateStart">Date début / Start date</label>
+      <label for="dateStart">Date début</label>
       <input id="dateStart" type="date" />
     </div>
 
     <div>
-      <label for="dateEnd">Date fin / End date</label>
+      <label for="dateEnd">Date fin</label>
       <input id="dateEnd" type="date" />
-      <p class="muted">Leave empty if ongoing.</p>
     </div>
   </div>
 
-  <h3>3. Personnes concernées</h3>
-
-  <label for="victims">Victimes / Affected populations</label>
+  <label for="victims">Victimes / Populations affectées</label>
   <textarea id="victims" rows="3"></textarea>
 
-  <label for="allegedAuthors">Auteurs présumés / Alleged perpetrators</label>
+  <label for="allegedAuthors">Auteurs présumés</label>
   <textarea id="allegedAuthors" rows="3"></textarea>
 
-  <h3>4. Violations</h3>
+  <label>Violations alléguées</label>
   <div class="checks">
     <label><input type="checkbox" class="vio" value="Violence against civilians"> Violence against civilians</label>
     <label><input type="checkbox" class="vio" value="Arbitrary detention"> Arbitrary detention</label>
-    <label><input type="checkbox" class="vio" value="Torture or ill-treatment"> Torture / ill-treatment</label>
-    <label><input type="checkbox" class="vio" value="Discrimination or persecution"> Discrimination / persecution</label>
-    <label><input type="checkbox" class="vio" value="Forced displacement"> Forced displacement</label>
+    <label><input type="checkbox" class="vio" value="Torture"> Torture / ill-treatment</label>
+    <label><input type="checkbox" class="vio" value="Discrimination"> Discrimination</label>
   </div>
 
-  <h3>5. Facts</h3>
+  <label for="factsSummary">Résumé des faits</label>
+  <textarea id="factsSummary" rows="5"></textarea>
 
-  <label for="factsSummary">Facts summary</label>
-  <textarea id="factsSummary" rows="5" placeholder="What happened? Where? When?"></textarea>
+  <label for="factsDetailed">Faits détaillés</label>
+  <textarea id="factsDetailed" rows="8"></textarea>
 
-  <label for="factsDetailed">Detailed facts</label>
-  <textarea id="factsDetailed" rows="8" placeholder="Chronology, testimonies, human impact…"></textarea>
-
-  <h3>6. Supporting information</h3>
-
-  <label for="evidence">Evidence / annexes (list)</label>
+  <label for="evidence">Preuves / Annexes</label>
   <textarea id="evidence" rows="4"></textarea>
 
-  <label for="requests">Requests</label>
+  <label for="requests">Demandes</label>
   <textarea id="requests" rows="4"></textarea>
 
   <div class="actions">
-    <button id="btn-export-pdf">📄 Export PDF</button>
-    <button id="btn-export-docx">📝 Export DOCX</button>
+    <button id="btn-export-pdf">Export PDF</button>
+    <button id="btn-export-docx">Export DOCX</button>
   </div>
-
-  <p class="muted">
-    Everything is generated locally on your device.
-  </p>
 </section>
 
-<!-- ================================================= -->
-<!-- GUIDE FR -->
-<!-- ================================================= -->
+<!-- ===================== HOW TO MULTILINGUE ===================== -->
 <section class="card">
-  <h2>Guide rapide — Français</h2>
-  <ul>
-    <li>Soyez factuel : qui, quoi, où, quand.</li>
-    <li>Utilisez vos mots, pas de jargon juridique requis.</li>
-    <li>Votre sécurité passe avant tout.</li>
-  </ul>
-</section>
+  <h2>How to use HFH / Comment utiliser HFH</h2>
 
-<!-- ================================================= -->
-<!-- GUIDE EN -->
-<!-- ================================================= -->
-<section class="card">
-  <h2>Quick guide — English</h2>
-  <ul>
-    <li>Be factual: who, what, where, when.</li>
-    <li>Use your own words — no legal expertise required.</li>
-    <li>Your safety comes first.</li>
-  </ul>
+  <details open>
+    <summary><strong>🇫🇷 Français</strong></summary>
+    <p>Écrivez simplement ce que vous savez : qui, quoi, où, quand.</p>
+    <p>Vous pouvez rester anonyme. Aucune donnée n’est transmise.</p>
+  </details>
 
-  <p class="muted">
-    HFH (Human For Human) is a local-first tool designed to help structure
-    human rights reports without collecting or transmitting data.
-  </p>
+  <details>
+    <summary><strong>🇬🇧 English</strong></summary>
+    <p>Write facts clearly: who, what, where, when.</p>
+    <p>You may remain anonymous. No data is transmitted.</p>
+  </details>
+
+  <details>
+    <summary><strong>🇪🇸 Español</strong></summary>
+    <p>Escriba los hechos de forma clara: quién, qué, dónde, cuándo.</p>
+    <p>Puede permanecer anónimo. No se transmiten datos.</p>
+  </details>
+
+  <details>
+    <summary><strong>🇷🇺 Русский</strong></summary>
+    <p>Опишите факты: кто, что, где и когда.</p>
+    <p>Вы можете остаться анонимным. Данные не передаются.</p>
+  </details>
+
+  <details>
+    <summary><strong>🇸🇦 العربية</strong></summary>
+    <p>اكتب الوقائع بوضوح: من، ماذا، أين، ومتى.</p>
+    <p>يمكنك البقاء مجهول الهوية. لا يتم إرسال أي بيانات.</p>
+  </details>
+
+  <details>
+    <summary><strong>🇨🇳 中文</strong></summary>
+    <p>请清楚描述事实：谁、发生了什么、在哪里、何时。</p>
+    <p>您可以保持匿名。不会传输任何数据。</p>
+  </details>
+
+  <details>
+    <summary><strong>🇺🇦 Українська</strong></summary>
+    <p>Опишіть факти: хто, що, де і коли.</p>
+    <p>Ви можете залишатися анонімними. Дані не передаються.</p>
+  </details>
+
 </section>
 
 </main>
 
 <footer class="footer">
-  <p>HFH v1.0 — Human for Human • Local-first • No storage • No tracking</p>
+  <p>HFH v1.0 — Human for Human • Local-first • No tracking</p>
 </footer>
 
-<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-
-<!-- Scripts -->
 <script src="js/pdf-docx.js"></script>
 
 </body>
