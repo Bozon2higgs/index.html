@@ -1,141 +1,235 @@
-:root{
-  --ink:#0a1a2f;
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --muted:#556;
-  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+/* ==================================================
+   HFH — Human For Human
+   Style CSS v1.0
+   ================================================== */
+
+/* -------------------------------
+   Variables globales
+-------------------------------- */
+:root {
+  --ink: #0a1a2f;
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --muted: #6b7280;
+
+  --accent-start: #1e3a8a;
+  --accent-end: #f97316;
+
+  --border-radius: 8px;
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--bg);
-  color:#222;
+/* -------------------------------
+   Reset & base
+-------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.site-header{
-  background: linear-gradient(135deg, #0a1a2f, #123456);
-  color:#fff;
-  padding: 22px 16px;
+html {
+  font-size: 16px;
 }
 
-.brand{
-  max-width: 980px;
-  margin: 0 auto;
-  display:flex;
-  align-items:center;
-  gap:14px;
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans",
+    Arial,
+    sans-serif;
+
+  line-height: 1.6;
+  color: #222;
+  background-color: var(--bg);
 }
 
-.logo{
-  width:72px;
-  height:72px;
-}
-.grid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap:12px;
-  margin-top: 8px;
-}
-
-@media (max-width: 720px){
-  .grid{ grid-template-columns: 1fr; }
+/* -------------------------------
+   Typographie
+-------------------------------- */
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--ink);
 }
 
-.checks{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap:8px;
-  margin-top: 8px;
+p {
+  margin: 0.5rem 0 0;
+  color: #374151;
 }
 
-.checks label{
-  font-weight: 400;
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-top: 0;
-}
-
-.brand-title{
-  margin:0;
-  font-size: 28px;
-  letter-spacing: 1px;
-}
-
-.brand-subtitle{
-  margin:4px 0 0;
-  opacity:0.9;
-  font-size: 13px;
-}
-
-.container{
-  max-width: 980px;
-  margin: 22px auto;
-  padding: 0 14px;
-}
-
-.card{
-  background: var(--card);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 18px;
-}
-
-h2{margin-top:0;color:var(--ink)}
-
-label{
-  font-weight: 700;
-  display:block;
-  margin-top: 12px;
-}
-
-select, textarea, input{
-  width:100%;
-  margin-top: 8px;
-  padding: 10px;
-  border: 1px solid #ccd;
-  border-radius: 8px;
-  font-size: 15px;
-}
-
-textarea{resize: vertical}
-
-hr{
-  border:0;
-  border-top:1px solid #eef;
-  margin: 14px 0;
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-button{
-  background: var(--ink);
-  color:#fff;
-  border:0;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor:pointer;
-  font-size: 15px;
-}
-
-button:hover{opacity:0.92}
-
-.muted{
+small,
+.helper-text {
+  font-size: 0.85rem;
   color: var(--muted);
-  font-size: 13px;
 }
 
-.footer{
-  text-align:center;
-  color:#667;
-  font-size: 12px;
-  padding: 26px 12px;
+/* -------------------------------
+   Header / Hero
+-------------------------------- */
+.site-header {
+  background: linear-gradient(
+    135deg,
+    var(--accent-start),
+    var(--ink)
+  );
+  color: #ffffff;
+  padding: 3rem 1.5rem 2.5rem;
+}
+
+.brand {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.brand-text h1 {
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.tagline {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #e5e7eb;
+}
+
+/* -------------------------------
+   Action principale
+-------------------------------- */
+.hero-action {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+.primary-btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+
+  background: linear-gradient(
+    90deg,
+    var(--accent-start),
+    var(--accent-end)
+  );
+  color: #ffffff;
+
+  box-shadow: var(--shadow-soft);
+}
+
+.primary-btn:hover {
+  opacity: 0.95;
+}
+
+.primary-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35);
+}
+
+/* -------------------------------
+   Contenu principal
+-------------------------------- */
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Cartes / sections */
+.card {
+  background: var(--card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* -------------------------------
+   Formulaire
+-------------------------------- */
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-start);
+  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
+}
+
+/* -------------------------------
+   Boutons secondaires
+-------------------------------- */
+.secondary-btn {
+  background: #ffffff;
+  color: var(--ink);
+  border: 1px solid #d1d5db;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.secondary-btn:hover {
+  background: #f9fafb;
+}
+
+/* -------------------------------
+   Responsive
+-------------------------------- */
+@media (max-width: 640px) {
+  .brand {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    width: 140px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-action {
+    margin-top: 1.5rem;
+  }
 }
