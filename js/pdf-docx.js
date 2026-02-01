@@ -1,8 +1,8 @@
 /* ==================================================
-   HFH — Export PDF & DOCX (FIXED)
+   HFH — Export PDF & DOCX (STABLE)
    ================================================== */
 
-function val(id) {
+function v(id) {
   const el = document.getElementById(id);
   return el ? el.value.trim() : "";
 }
@@ -12,57 +12,57 @@ function val(id) {
 ================================ */
 document.getElementById("exportPDF")?.addEventListener("click", () => {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
+  const pdf = new jsPDF();
   let y = 20;
 
-  doc.setFontSize(16);
-  doc.text("Human For Human", 20, y);
+  pdf.setFontSize(16);
+  pdf.text("Human For Human", 20, y);
   y += 8;
 
-  doc.setFontSize(10);
-  doc.text(
+  pdf.setFontSize(10);
+  pdf.text(
     "Outil local et indépendant pour structurer des faits.\n" +
     "Aucune donnée n’est stockée ou transmise.",
     20,
     y
   );
-  y += 12;
+  y += 14;
 
-  doc.setFontSize(11);
+  pdf.setFontSize(11);
 
-  const fields = [
-    ["Identité", val("identity")],
-    ["Nom / Prénom", val("fullname")],
-    ["Pays / Territoire", val("country")],
-    ["Victimes / populations affectées", val("victims")],
-    ["Résumé des faits", val("factsSummary")],
-    ["Description détaillée des faits", val("factsDetailed")]
-  ];
-
-  fields.forEach(([title, content]) => {
-    if (!content) return;
-    if (y > 260) {
-      doc.addPage();
-      y = 20;
-    }
-    doc.setFont(undefined, "bold");
-    doc.text(title, 20, y);
+  [
+    ["Identité", v("identity")],
+    ["Nom / Prénom", v("fullname")],
+    ["Pays / Territoire", v("country")],
+    ["Victimes / populations affectées", v("victims")],
+    ["Résumé des faits", v("factsSummary")],
+    ["Description détaillée des faits", v("factsDetailed")]
+  ].forEach(([t, c]) => {
+    if (!c) return;
+    if (y > 260) { pdf.addPage(); y = 20; }
+    pdf.setFont(undefined, "bold");
+    pdf.text(t, 20, y);
     y += 6;
-    doc.setFont(undefined, "normal");
-    const txt = doc.splitTextToSize(content, 170);
-    doc.text(txt, 20, y);
+    pdf.setFont(undefined, "normal");
+    const txt = pdf.splitTextToSize(c, 170);
+    pdf.text(txt, 20, y);
     y += txt.length * 6 + 4;
   });
 
-  doc.save("HFH_document.pdf");
+  pdf.save("HFH_document.pdf");
 });
 
 /* ===============================
    DOCX
 ================================ */
 document.getElementById("exportDOCX")?.addEventListener("click", () => {
-  const { Document, Packer, Paragraph, TextRun, HeadingLevel } = window.docx;
+  const {
+    Document,
+    Packer,
+    Paragraph,
+    TextRun,
+    HeadingLevel
+  } = window.docx;
 
   const doc = new Document({
     sections: [{
@@ -71,30 +71,30 @@ document.getElementById("exportDOCX")?.addEventListener("click", () => {
           text: "Human For Human",
           heading: HeadingLevel.TITLE
         }),
-
         new Paragraph({
-          children: [new TextRun({
-            text: "Outil local et indépendant pour structurer des faits.\nAucune donnée n’est stockée ou transmise.",
-            size: 22
-          })]
+          children: [
+            new TextRun({
+              text:
+                "Outil local et indépendant pour structurer des faits.\n" +
+                "Aucune donnée n’est stockée ou transmise.",
+              size: 22
+            })
+          ]
         }),
-
-        ...build("Identité", val("identity")),
-        ...build("Nom / Prénom", val("fullname")),
-        ...build("Pays / Territoire", val("country")),
-        ...build("Victimes / populations affectées", val("victims")),
-        ...build("Résumé des faits", val("factsSummary")),
-        ...build("Description détaillée des faits", val("factsDetailed"))
+        ...sec("Identité", v("identity")),
+        ...sec("Nom / Prénom", v("fullname")),
+        ...sec("Pays / Territoire", v("country")),
+        ...sec("Victimes / populations affectées", v("victims")),
+        ...sec("Résumé des faits", v("factsSummary")),
+        ...sec("Description détaillée des faits", v("factsDetailed"))
       ]
     }]
   });
 
-  Packer.toBlob(doc).then(blob => {
-    saveAs(blob, "HFH_document.docx");
-  });
+  Packer.toBlob(doc).then(b => saveAs(b, "HFH_document.docx"));
 });
 
-function build(title, content) {
+function sec(title, content) {
   if (!content) return [];
   return [
     new Paragraph({ text: title, heading: HeadingLevel.HEADING_2 }),
