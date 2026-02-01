@@ -1,235 +1,110 @@
-/* ==================================================
-   HFH — Human For Human
-   Style CSS v1.0
-   ================================================== */
-
-/* -------------------------------
-   Variables globales
--------------------------------- */
 :root {
-  --ink: #0a1a2f;
+  --blue-dark: #0a1a2f;
+  --blue-mid: #123456;
   --bg: #f4f6f8;
   --card: #ffffff;
-  --muted: #6b7280;
-
-  --accent-start: #1e3a8a;
-  --accent-end: #f97316;
-
-  --border-radius: 8px;
-  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --text: #222;
+  --muted: #666;
 }
 
-/* -------------------------------
-   Reset & base
--------------------------------- */
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
 }
 
 body {
   margin: 0;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Noto Sans",
-    Arial,
-    sans-serif;
-
-  line-height: 1.6;
-  color: #222;
-  background-color: var(--bg);
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* -------------------------------
-   Typographie
--------------------------------- */
-h1, h2, h3 {
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  color: var(--ink);
-}
-
-p {
-  margin: 0.5rem 0 0;
-  color: #374151;
-}
-
-small,
-.helper-text {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-/* -------------------------------
-   Header / Hero
--------------------------------- */
+/* HEADER */
 .site-header {
-  background: linear-gradient(
-    135deg,
-    var(--accent-start),
-    var(--ink)
-  );
-  color: #ffffff;
-  padding: 3rem 1.5rem 2.5rem;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+  padding: 24px;
 }
 
 .brand {
-  max-width: 900px;
+  max-width: 980px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 16px;
 }
 
 .logo {
-  width: 120px;
-  height: auto;
-  flex-shrink: 0;
+  height: 64px;
+  width: auto;
 }
 
 .brand-text h1 {
-  font-size: 1.8rem;
-  color: #ffffff;
+  margin: 0;
+  color: #fff;
+  font-size: 1.6rem;
 }
 
 .tagline {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #e5e7eb;
-}
-
-/* -------------------------------
-   Action principale
--------------------------------- */
-.hero-action {
-  max-width: 900px;
-  margin: 2rem auto 0;
-  text-align: center;
-}
-
-.primary-btn {
-  display: inline-block;
-  padding: 0.9rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-
-  background: linear-gradient(
-    90deg,
-    var(--accent-start),
-    var(--accent-end)
-  );
-  color: #ffffff;
-
-  box-shadow: var(--shadow-soft);
-}
-
-.primary-btn:hover {
-  opacity: 0.95;
-}
-
-.primary-btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.35);
-}
-
-/* -------------------------------
-   Contenu principal
--------------------------------- */
-main {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
-}
-
-/* Cartes / sections */
-.card {
-  background: var(--card);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-/* -------------------------------
-   Formulaire
--------------------------------- */
-label {
-  display: block;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 0.6rem 0.7rem;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-family: inherit;
+  margin: 4px 0 0;
+  color: #e0e6ee;
   font-size: 0.95rem;
 }
 
+/* MAIN */
+main {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+h2 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+input,
+select,
 textarea {
-  resize: vertical;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+textarea {
   min-height: 120px;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--accent-start);
-  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
-}
-
-/* -------------------------------
-   Boutons secondaires
--------------------------------- */
-.secondary-btn {
-  background: #ffffff;
-  color: var(--ink);
-  border: 1px solid #d1d5db;
-  padding: 0.6rem 1.4rem;
+/* BUTTONS */
+button {
+  margin-top: 16px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
+  background: var(--blue-mid);
+  color: #fff;
 }
 
-.secondary-btn:hover {
-  background: #f9fafb;
+button + button {
+  margin-left: 12px;
 }
 
-/* -------------------------------
-   Responsive
--------------------------------- */
-@media (max-width: 640px) {
-  .brand {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .logo {
-    width: 140px;
-  }
-
-  .brand-text h1 {
-    font-size: 1.6rem;
-  }
-
-  .hero-action {
-    margin-top: 1.5rem;
-  }
+button:hover {
+  opacity: 0.9;
 }
