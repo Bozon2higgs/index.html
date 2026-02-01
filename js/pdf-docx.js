@@ -75,13 +75,17 @@ document.getElementById("exportDOCX").addEventListener("click", () => {
     }]
   });
 
-  Packer.toBlob(doc).then(b => saveAs(b, "HFH_document.docx"));
+  Packer.toBlob(doc).then(blob => {
+    saveAs(blob, "HFH_document.docx");
+  });
 });
 
 function sec(title, content) {
   if (!content) return [];
   return [
     new Paragraph({ text: title, heading: HeadingLevel.HEADING_2 }),
-    new Paragraph({ children: [new TextRun({ text: content, size: 22 })] })
+    new Paragraph({
+      children: [new TextRun({ text: content, size: 22 })]
+    })
   ];
 }
